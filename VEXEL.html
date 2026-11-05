@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -238,8 +239,10 @@
                 <div class="w-12 h-12 bg-gradient-to-tr from-blookYellow to-blookPink rounded-2xl flex items-center justify-center text-3xl shadow-md transform -rotate-6 hover:rotate-0 transition-transform">
                     ⚡
                 </div>
-                <div class="font-blooket text-3xl md:text-4xl text-white tracking-wide drop-shadow-md">
-                    Vexel
+                <div class="flex flex-col">
+                    <div class="font-blooket text-3xl md:text-4xl text-white tracking-wide drop-shadow-md leading-none">
+                        Vexel <span class="text-xs font-black text-blookYellow align-top">V2</span>
+                    </div>
                 </div>
             </div>
 
@@ -249,7 +252,7 @@
                     <i class="fa-solid fa-house"></i> Home
                 </button>
                 <button onclick="switchTab('play-tab')" id="nav-play-tab" class="nav-btn btn-3d bg-blookCard hover:bg-indigo-900 text-white font-normal px-3 py-2 rounded-xl text-xs md:text-sm border-b-2 border-blookBorder shadow-blook-btn-sm flex items-center gap-1.5">
-                    <i class="fa-solid fa-gamepad text-blookYellow"></i> Play
+                    <i class="fa-solid fa-gamepad text-blookYellow"></i> Play (9 Modes)
                 </button>
                 <button onclick="switchTab('locker-tab')" id="nav-locker-tab" class="nav-btn btn-3d bg-blookCard hover:bg-indigo-900 text-white font-normal px-3 py-2 rounded-xl text-xs md:text-sm border-b-2 border-blookBorder shadow-blook-btn-sm flex items-center gap-1.5">
                     <i class="fa-solid fa-box text-blookPink"></i> Vexels
@@ -286,14 +289,15 @@
                         <span id="user-tokens-display" class="font-black text-blookYellow text-lg md:text-xl">1,000</span>
                     </div>
                 </div>
-                <!-- Interactive Profile Card Banner Header -->
+
+                <!-- Account Login / Profile Card Banner Header -->
                 <div id="header-profile-banner" onclick="openProfileModal()" class="banner-default flex items-center gap-2 border-2 px-3 py-1.5 rounded-xl cursor-pointer transition-transform hover:scale-105 shadow-md">
                     <div class="w-8 h-8 rounded-lg bg-indigo-950/80 border border-blookYellow flex items-center justify-center text-xl shadow" id="nav-active-blook-icon">
                         ⚡
                     </div>
                     <div class="flex flex-col leading-tight">
-                        <span id="nav-username-display" class="font-black text-sm max-w-[100px] truncate text-white drop-shadow">VexelMaster</span>
-                        <span id="nav-banner-name" class="text-[8px] font-extrabold text-indigo-200 uppercase tracking-widest drop-shadow">Default Banner</span>
+                        <span id="nav-username-display" class="font-black text-sm max-w-[100px] truncate text-white drop-shadow">Guest_Player</span>
+                        <span id="nav-banner-name" class="text-[8px] font-extrabold text-emerald-400 uppercase tracking-widest drop-shadow">🔑 Account Login</span>
                     </div>
                 </div>
             </div>
@@ -301,14 +305,32 @@
         </div>
     </header>
 
-    <!-- PROFILE CUSTOMIZATION MODAL -->
+    <!-- ACCOUNT & PROFILE CUSTOMIZATION MODAL -->
     <div id="profile-modal" class="fixed inset-0 z-50 bg-black/80 hidden flex-col items-center justify-center p-4 backdrop-blur-sm">
         <div class="w-full max-w-2xl bg-blookCard border-4 border-blookBorder rounded-3xl p-6 flex flex-col gap-5 shadow-2xl relative">
             <button onclick="closeProfileModal()" class="absolute top-4 right-4 bg-blookPink hover:bg-rose-600 text-white font-extrabold w-8 h-8 rounded-full flex items-center justify-center text-xs">✕</button>
             
             <div class="text-center space-y-1">
-                <h3 class="font-blooket text-3xl text-blookYellow">Profile & Banners</h3>
-                <p class="text-xs text-indigo-200 font-bold">Customize your username, equipped Vexel avatar, and profile banner background!</p>
+                <h3 class="font-blooket text-3xl text-blookYellow">Account & Progress Sync</h3>
+                <p class="text-xs text-indigo-200 font-bold">Log in with your Account Name & Password to save progress across updates!</p>
+            </div>
+
+            <!-- Login / Register Inputs -->
+            <div id="account-auth-section" class="bg-indigo-950/90 border-2 border-blookBorder rounded-2xl p-4 space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">Account Username</label>
+                        <input id="auth-username-input" type="text" placeholder="Enter username..." class="w-full bg-blookCard border-2 border-blookBorder rounded-xl px-3 py-2 text-xs font-bold text-white outline-none focus:border-blookYellow"/>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-black text-indigo-300 uppercase block mb-1">Account Password</label>
+                        <input id="auth-password-input" type="password" placeholder="Enter password..." class="w-full bg-blookCard border-2 border-blookBorder rounded-xl px-3 py-2 text-xs font-bold text-white outline-none focus:border-blookYellow"/>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="handleAccountLogin()" class="btn-3d flex-1 bg-blookGreen hover:bg-emerald-500 text-white font-black py-2 rounded-xl border-b-2 border-emerald-900 text-xs uppercase">Log In Account</button>
+                    <button onclick="handleAccountRegister()" class="btn-3d flex-1 bg-blookBlue hover:bg-blue-500 text-white font-black py-2 rounded-xl border-b-2 border-blue-900 text-xs uppercase">Save / Create Account</button>
+                </div>
             </div>
 
             <!-- Profile Banner Preview Card -->
@@ -323,9 +345,6 @@
                     </div>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <button onclick="promptUsernameChange()" class="btn-3d bg-blookBlue hover:bg-blue-500 text-white font-extrabold text-xs px-4 py-2 rounded-xl border-b-2 border-blue-900 uppercase">
-                        Edit Name ✏️
-                    </button>
                     <button onclick="resetGameProgress()" class="btn-3d bg-blookPink hover:bg-rose-600 text-white font-extrabold text-xs px-4 py-2 rounded-xl border-b-2 border-rose-900 uppercase">
                         Reset Progress ⚠️
                     </button>
@@ -335,13 +354,13 @@
             <!-- Banner Selector Section -->
             <div class="space-y-3">
                 <h4 class="font-blooket text-xl text-white">Select Profile Banner</h4>
-                <div id="profile-banners-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-56 overflow-y-auto pr-1">
+                <div id="profile-banners-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-48 overflow-y-auto pr-1">
                     <!-- Dynamic Banner Items -->
                 </div>
             </div>
 
             <button onclick="closeProfileModal()" class="btn-3d w-full bg-blookGreen hover:bg-emerald-500 text-white font-black py-3 rounded-2xl border-b-4 border-emerald-900 uppercase text-sm">
-                Done & Save
+                Done & Save State
             </button>
         </div>
     </div>
@@ -349,42 +368,110 @@
     <!-- MAIN APP BODY -->
     <main class="flex-grow flex items-center justify-center p-4 relative max-w-7xl w-full mx-auto">
 
-        <!-- FLOATING BUBBLE TOAST CONTAINER (Replaces Native Popups) -->
+        <!-- FLOATING BUBBLE TOAST CONTAINER -->
         <div id="bubble-toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
-        <!-- 1. HOME LANDING TAB -->
+        <!-- 1. HOME LANDING TAB (EXPANDED FOR V2) -->
         <section id="home-tab" class="tab-content w-full flex flex-col items-center py-6 gap-8">
             <div class="text-center space-y-3 max-w-3xl">
                 <div class="inline-block bg-gradient-to-r from-blookYellow to-amber-500 text-blookBg font-black px-5 py-1.5 rounded-full text-xs uppercase tracking-widest shadow-lg">
-                    ⚡ Vexel Platform Engine
+                    ⚡ Vexel Platform Engine V2
                 </div>
                 <h1 class="font-blooket text-4xl md:text-6xl text-white tracking-tight drop-shadow-lg leading-tight">
-                    Play Games, Open Packs <br/><span class="text-blookYellow">& Earn 100 Achievements!</span>
+                    Play Games, Open Packs <br/><span class="text-blookYellow">& Save Your Progress!</span>
                 </h1>
                 <p class="text-indigo-200 text-base md:text-lg font-bold max-w-2xl mx-auto">
-                    Collect rare Vexels, spin the Wheel of Vexel Bucks, and conquer all 100 achievements to unlock the ultimate Master Trophy!
+                    Log in to save your progression across all updates, mine Vexel Bucks at the Clicker Hub, complete daily quests, and collect 300 Vexels!
                 </p>
             </div>
 
-            <!-- Daily Gift Banner -->
-            <div class="bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 border-4 border-blookYellow rounded-3xl p-6 w-full max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-2xl">
-                <div class="flex items-center gap-4">
-                    <div class="text-5xl animate-bounce">🎁</div>
-                    <div>
-                        <h3 class="font-blooket text-2xl text-white">Daily Vexel Reward</h3>
-                        <p class="text-xs text-indigo-200 font-bold">Claim your bonus Vexel Bucks or free Wheel Spins!</p>
+            <!-- HOME DASHBOARD GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+                <!-- Clicker Mining Hub -->
+                <div class="bg-gradient-to-b from-indigo-950 to-indigo-900 border-4 border-blookYellow rounded-3xl p-5 flex flex-col items-center text-center gap-4 shadow-2xl">
+                    <h3 class="font-blooket text-2xl text-blookYellow">Clicker Miner Station</h3>
+                    <p class="text-xs text-indigo-200 font-bold">Tap the power generator to mine instant Vexel Bucks!</p>
+                    
+                    <button onclick="clickerMine()" class="w-32 h-32 rounded-3xl bg-gradient-to-tr from-blookYellow via-amber-400 to-blookPink border-4 border-white flex items-center justify-center text-6xl shadow-2xl active:scale-95 transition-transform cursor-pointer">
+                        ⚡
+                    </button>
+
+                    <div class="bg-indigo-950 px-4 py-2 rounded-2xl border border-blookBorder w-full flex items-center justify-between">
+                        <span class="text-xs font-black text-indigo-300 uppercase">Mined Bucks:</span>
+                        <span id="clicker-total-display" class="text-sm font-black text-blookYellow">⚡ 0</span>
                     </div>
                 </div>
-                <button onclick="claimDailyGift()" class="btn-3d bg-blookYellow hover:bg-yellow-400 text-blookBg font-black px-6 py-3 rounded-2xl border-b-4 border-yellow-700 text-sm uppercase">
-                    Claim Gift
-                </button>
+
+                <!-- Daily Reward & Quests Station -->
+                <div class="bg-gradient-to-b from-purple-950 to-indigo-950 border-4 border-purple-500 rounded-3xl p-5 flex flex-col justify-between gap-4 shadow-2xl">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-3">
+                            <span class="text-4xl">🎁</span>
+                            <div>
+                                <h3 class="font-blooket text-xl text-white">Daily Gift & Tasks</h3>
+                                <p class="text-xs text-purple-200 font-bold">Claim bonus bucks or free wheel rolls!</p>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5 pt-2">
+                            <div class="bg-indigo-950/80 border border-purple-800 p-2 rounded-xl flex items-center justify-between text-xs font-bold text-white">
+                                <span>🎯 Play 3 Minigames (+⚡ 500)</span>
+                                <span id="quest-1-status" class="text-blookYellow">0/3</span>
+                            </div>
+                            <div class="bg-indigo-950/80 border border-purple-800 p-2 rounded-xl flex items-center justify-between text-xs font-bold text-white">
+                                <span>📦 Open 5 Market Packs (+🎲 2 Rolls)</span>
+                                <span id="quest-2-status" class="text-blookYellow">0/5</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="claimDailyGift()" class="btn-3d w-full bg-blookYellow hover:bg-yellow-400 text-blookBg font-black py-3 rounded-2xl border-b-4 border-yellow-700 text-xs uppercase">
+                        Claim Daily Reward
+                    </button>
+                </div>
+
+                <!-- Live Player Progression Stats -->
+        <div class="bg-gradient-to-b from-blue-950 to-indigo-950 border-4 border-blookBlue rounded-3xl p-5 flex flex-col justify-between gap-4 shadow-2xl">
+            <div class="space-y-3">
+                <h3 class="font-blooket text-xl text-blookBlue">Live Stats Overview</h3>
+                <div class="space-y-2">
+                    <div class="bg-indigo-950 p-2.5 rounded-xl border border-indigo-800 flex justify-between items-center text-xs font-bold">
+                        <span class="text-indigo-300 uppercase">Vexels Unlocked:</span>
+                        <span id="home-stat-unlocked" class="text-blookYellow">3 / 220</span>
+                    </div>
+                    <div class="bg-indigo-950 p-2.5 rounded-xl border border-indigo-800 flex justify-between items-center text-xs font-bold">
+                        <span class="text-indigo-300 uppercase">Packs Opened:</span>
+                        <span id="home-stat-packs" class="text-white">0</span>
+                    </div>
+                    <div class="bg-indigo-950 p-2.5 rounded-xl border border-indigo-800 flex justify-between items-center text-xs font-bold">
+                        <span class="text-indigo-300 uppercase">Minigames Played:</span>
+                        <span id="home-stat-games" class="text-white">0</span>
+                    </div>
+                </div>
+            </div>
+            <button onclick="openProfileModal()" class="btn-3d w-full bg-blookBlue hover:bg-blue-500 text-white font-black py-3 rounded-2xl border-b-4 border-blue-900 text-xs uppercase">
+                Manage Account & Save
+            </button>
+        </div>
+                            <div class="bg-indigo-950 p-2.5 rounded-xl border border-indigo-800 flex justify-between items-center text-xs font-bold">
+                                <span class="text-indigo-300 uppercase">Packs Opened:</span>
+                                <span id="home-stat-packs" class="text-white">0</span>
+                            </div>
+                            <div class="bg-indigo-950 p-2.5 rounded-xl border border-indigo-800 flex justify-between items-center text-xs font-bold">
+                                <span class="text-indigo-300 uppercase">Minigames Played:</span>
+                                <span id="home-stat-games" class="text-white">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="openAccountModal()" class="btn-3d w-full bg-blookBlue hover:bg-blue-500 text-white font-black py-3 rounded-2xl border-b-4 border-blue-900 text-xs uppercase">
+                        Manage Account & Save
+                    </button>
+                </div>
             </div>
         </section>
 
-        <!-- 2. PLAYABLE GAME TAB -->
+        <!-- 2. PLAYABLE GAME TAB (EXPANDED WITH 3 NEW GAME MODES) -->
         <section id="play-tab" class="tab-content w-full hidden flex-col items-center py-4">
             <div id="game-selection-screen" class="w-full max-w-5xl space-y-6 text-center">
-                <h2 class="font-blooket text-4xl text-blookYellow">Select Game Mode</h2>
+                <h2 class="font-blooket text-4xl text-blookYellow">Select Game Mode (9 Modes)</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     <div onclick="startInteractiveGame('getrich')" class="bg-blookCard border-4 border-amber-500 rounded-3xl p-5 hover:scale-105 transition-transform cursor-pointer shadow-xl">
                         <div class="text-5xl mb-2">👑</div>
@@ -404,7 +491,7 @@
                     <div onclick="startInteractiveGame('restaurant')" class="bg-blookCard border-4 border-rose-500 rounded-3xl p-5 hover:scale-105 transition-transform cursor-pointer shadow-xl">
                         <div class="text-5xl mb-2">🍔</div>
                         <h3 class="font-blooket text-xl text-white">Restaurant Rush</h3>
-                        <p class="text-xs text-gray-300 mt-2">Serve hungry customers correct meals to collect large cash tips!</p>
+                        <p class="text-xs text-gray-300 mt-2">Serve hungry customers correct meals to collect large tips!</p>
                     </div>
                     <div onclick="startInteractiveGame('factory')" class="bg-blookCard border-4 border-emerald-500 rounded-3xl p-5 hover:scale-105 transition-transform cursor-pointer shadow-xl">
                         <div class="text-5xl mb-2">🏭</div>
@@ -415,6 +502,27 @@
                         <div class="text-5xl mb-2">🚀</div>
                         <h3 class="font-blooket text-xl text-white">Space Bounty</h3>
                         <p class="text-xs text-gray-300 mt-2">Track down cosmic bounties for maximum Vexel Bucks rewards!</p>
+                    </div>
+
+                    <!-- NEW MODE 1 -->
+                    <div onclick="startInteractiveGame('gemheist')" class="bg-blookCard border-4 border-cyan-400 rounded-3xl p-5 hover:scale-105 transition-transform cursor-pointer shadow-xl">
+                        <div class="text-5xl mb-2">💎</div>
+                        <h3 class="font-blooket text-xl text-cyan-300">Gem Heist</h3>
+                        <p class="text-xs text-gray-300 mt-2">Infiltrate high-security vaults and disarm lasers for rare gems!</p>
+                    </div>
+
+                    <!-- NEW MODE 2 -->
+                    <div onclick="startInteractiveGame('cyberhacker')" class="bg-blookCard border-4 border-pink-500 rounded-3xl p-5 hover:scale-105 transition-transform cursor-pointer shadow-xl">
+                        <div class="text-5xl mb-2">💻</div>
+                        <h3 class="font-blooket text-xl text-pink-400">Cyber Hacker</h3>
+                        <p class="text-xs text-gray-300 mt-2">Bypass mainframe encryption nodes with fast code combos!</p>
+                    </div>
+
+                    <!-- NEW MODE 3 -->
+                    <div onclick="startInteractiveGame('cosmicdodge')" class="bg-blookCard border-4 border-amber-400 rounded-3xl p-5 hover:scale-105 transition-transform cursor-pointer shadow-xl">
+                        <div class="text-5xl mb-2">☄️</div>
+                        <h3 class="font-blooket text-xl text-amber-300">Cosmic Dodge</h3>
+                        <p class="text-xs text-gray-300 mt-2">Steer your cosmic ship around incoming asteroid storms!</p>
                     </div>
                 </div>
             </div>
@@ -461,7 +569,7 @@
             </div>
         </section>
 
-        <!-- 3. VEXEL LOCKER TAB (SORTED SECTIONS BY PACK WITH LOCKS & PRICES) -->
+        <!-- 3. VEXEL LOCKER TAB -->
         <section id="locker-tab" class="tab-content w-full hidden flex-col items-center py-4 gap-6">
             <div class="text-center space-y-2">
                 <h2 class="font-blooket text-4xl text-white">Vexel Collection Locker</h2>
@@ -477,7 +585,7 @@
         <section id="market-tab" class="tab-content w-full hidden flex-col items-center py-4 gap-6 relative">
             <div class="text-center space-y-2">
                 <h2 class="font-blooket text-4xl text-blookGreen">Vexel Market</h2>
-                <p class="text-xs text-indigo-200 font-bold">Chromas award +1 FREE Roll! Mythic pulls award +3 FREE Rolls!</p>
+                <p class="text-xs text-indigo-200 font-bold">Chroma Odds: 1% (1 in 100) • Mythic Odds: 0.5% (1 in 200)</p>
             </div>
 
             <!-- DAILY VEXEL SHOP SECTION -->
@@ -504,15 +612,15 @@
                 <!-- Dynamic Packs -->
             </div>
 
-            <!-- Tiny Secret Square Button -->
+            <!-- Secret Corner Square Button (Now 15,000 Vexel Bucks) -->
             <button onclick="claimSecretVexelBucks()" title="Secret" class="absolute bottom-1 right-1 w-2.5 h-2.5 border border-amber-400/30 opacity-40 hover:opacity-100 bg-transparent rounded-sm cursor-pointer z-30 transition-opacity focus:outline-none"></button>
         </section>
 
         <!-- 5. VEXEL PASS TAB -->
         <section id="pass-tab" class="tab-content w-full hidden flex-col items-center py-4 gap-6">
             <div class="text-center space-y-2">
-                <h2 class="font-blooket text-4xl text-purple-400">Vexel Pass Season 1</h2>
-                <p class="text-xs text-indigo-200 font-bold">Earn Pass XP by playing games & opening packs to level up your rewards!</p>
+                <h2 class="font-blooket text-4xl text-purple-400">Vexel Pass Season 2: Neon Galaxy 🚀</h2>
+                <p class="text-xs text-indigo-200 font-bold">Earn Pass XP by playing games & opening packs to level up 20 Season 2 rewards!</p>
             </div>
 
             <!-- Pass Unlock Header -->
@@ -520,8 +628,8 @@
                 <div class="flex items-center gap-4">
                     <div class="text-5xl">👑</div>
                     <div>
-                        <h3 class="font-blooket text-2xl text-white">Vexel Premium Pass</h3>
-                        <p id="pass-status-text" class="text-xs text-purple-200 font-bold">Unlock the Premium Track to get 2x rewards on every tier!</p>
+                        <h3 class="font-blooket text-2xl text-white">Season 2 Premium Pass</h3>
+                        <p id="pass-status-text" class="text-xs text-purple-200 font-bold">Unlock the Premium Track to get 2x rewards on all 20 tiers!</p>
                     </div>
                 </div>
                 <button id="unlock-premium-pass-btn" onclick="unlockPremiumPass()" class="btn-3d bg-blookYellow hover:bg-yellow-400 text-blookBg font-black px-6 py-3.5 rounded-2xl border-b-4 border-yellow-700 text-sm uppercase shadow-lg">
@@ -535,11 +643,11 @@
             </div>
         </section>
 
-        <!-- 6. WHEEL OF VEXEL BUCKS -->
+        <!-- 6. WHEEL OF VEXEL BUCKS (UPGRADED WITH VEXEL LOGO) -->
         <section id="wheel-tab" class="tab-content w-full hidden flex-col items-center py-4 gap-6">
             <div class="text-center space-y-2">
                 <h2 class="font-blooket text-4xl text-blookYellow">Wheel of Vexel Bucks</h2>
-                <p class="text-xs text-indigo-200 font-bold">Earn rolls by playing games, pulling Chromas/Mythics, and completing achievements!</p>
+                <p class="text-xs text-indigo-200 font-bold">Spin to win Vexel Bucks! Balanced prize slices with custom coin hub graphic.</p>
             </div>
             <div class="flex flex-col items-center gap-6">
                 <div class="bg-indigo-950 border-2 border-blookYellow px-5 py-2.5 rounded-2xl text-sm font-black text-white shadow-lg">
@@ -547,6 +655,12 @@
                 </div>
                 <div class="relative w-72 h-72 md:w-80 md:h-80">
                     <canvas id="wheel-canvas" width="320" height="320" class="w-full h-full rounded-full shadow-2xl border-4 border-blookYellow"></canvas>
+                    
+                    <!-- Golden Vexel Bucks Logo Wheel Center Hub -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-indigo-950 border-4 border-blookYellow shadow-2xl flex items-center justify-center p-2 z-10 pointer-events-none">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='c' cx='35%' cy='35%' r='65%'><stop offset='0%' stop-color='%23fff4a8'/><stop offset='30%' stop-color='%23f2ca30'/><stop offset='70%' stop-color='%23d99f07'/><stop offset='100%' stop-color='%238a5a00'/></radialGradient><radialGradient id='f' cx='40%' cy='40%' r='60%'><stop offset='0%' stop-color='%23ffe873'/><stop offset='60%' stop-color='%23e2a90d'/><stop offset='100%' stop-color='%23a87200'/></radialGradient><linearGradient id='b' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23ffffff'/><stop offset='25%' stop-color='%23fff275'/><stop offset='70%' stop-color='%23ffb800'/><stop offset='100%' stop-color='%23e68a00'/></linearGradient></defs><circle cx='50' cy='50' r='48' fill='url(%23c)' stroke='%23613f00' stroke-width='1.5'/><path d='M 54 18 L 26 50 C 24 53 27 57 31 57 L 46 57 L 41 81 C 40 85 46 87 49 83 L 75 49 C 78 45 75 41 70 41 L 55 41 L 60 21 C 61 17 56 15 54 18 Z' fill='url(%23b)' stroke='%23b56f00' stroke-width='2'/></svg>" alt="Coin" class="w-full h-full object-contain"/>
+                    </div>
+
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-0 h-0 border-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-t-[25px] border-t-blookPink z-20"></div>
                 </div>
                 <button onclick="spinWheel()" id="spin-wheel-btn" class="btn-3d bg-blookYellow hover:bg-yellow-400 text-blookBg font-black px-8 py-3.5 rounded-2xl border-b-4 border-yellow-700 text-lg uppercase shadow-lg">
@@ -581,20 +695,22 @@
             </div>
         </section>
 
-        <!-- 7. FRIENDS TAB -->
+        <!-- 7. FRIENDS TAB (CLEARED / REAL FRIENDS ONLY) -->
         <section id="friends-tab" class="tab-content w-full hidden flex-col items-center py-4 gap-6">
             <div class="text-center space-y-2">
                 <h2 class="font-blooket text-4xl text-cyan-400">Friends & Rivals</h2>
-                <p class="text-xs text-indigo-200 font-bold">Add player tags to send gift rolls and compare Vexel collection progress!</p>
+                <p class="text-xs text-indigo-200 font-bold">Add player tags to build your custom friends list and gift rolls!</p>
             </div>
 
             <div class="w-full max-w-4xl bg-blookCard border-4 border-blookBorder rounded-3xl p-6 space-y-6 shadow-xl">
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <input id="friend-username-input" type="text" placeholder="Enter Friend's Username..." class="flex-grow bg-indigo-950 border-2 border-blookBorder rounded-2xl px-4 py-3 text-sm text-white font-bold outline-none" />
+                    <input id="friend-username-input" type="text" placeholder="Enter Friend's Account Name..." class="flex-grow bg-indigo-950 border-2 border-blookBorder rounded-2xl px-4 py-3 text-sm text-white font-bold outline-none focus:border-cyan-400" />
                     <button onclick="addFriend()" class="btn-3d bg-blookBlue hover:bg-blue-500 text-white font-extrabold px-6 py-3 rounded-2xl border-b-4 border-blue-900 uppercase text-xs">Add Friend</button>
                 </div>
 
-                <div id="friends-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                <div id="friends-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dynamic Real Friends Grid -->
+                </div>
             </div>
         </section>
 
@@ -611,16 +727,17 @@
 
     <!-- FOOTER -->
     <footer class="w-full bg-blookNav border-t-2 border-blookBorder p-4 text-center text-xs text-indigo-300 font-bold">
-        Vexel Engine • Single-File HTML Platform • Play, Collect & Conquer 100 Achievements
+        Vexel Engine V2 • Logged Account Save System • 9 Minigame Modes • Balanced Odds
     </footer>
 
     <!-- SCRIPT ENGINE & LOGIC -->
     <script>
         /* ==========================================================================
-           GLOBAL STATE & LOCALSTORAGE PERSISTENCE (FRESH NEW ACCOUNT RESET)
+           GLOBAL STATE & LOCALSTORAGE PERSISTENCE (ACCOUNT SYNC SYSTEM)
            ========================================================================== */
         const BLOOKS_DATABASE = {};
         
+        // Rebalanced Pull Weights: Chromas (1.0% = 1/100) & Mythics (0.5% = 1/200)
         const RARITY_WEIGHTS = {
             'common': 1.0,
             'uncommon': 0.6,
@@ -628,7 +745,7 @@
             'epic': 0.15,
             'legendary': 0.05,
             'chroma': 0.01,
-            'mythic': 0.002
+            'mythic': 0.005
         };
 
         const RARITY_DIRECT_PRICES = {
@@ -643,53 +760,6 @@
 
         function registerVexel(id, name, emoji, rarity, pack) {
             BLOOKS_DATABASE[id] = { id, name, emoji, rarity, pack };
-        }
-
-        const DEFAULT_USER_DATA = {
-            tokens: 1000,
-            username: 'VexelMaster',
-            coinRolls: 5,
-            activeBlook: 'spark',
-            activeBanner: 'default',
-            unlockedBlooks: ['spark', 'cat', 'chick'],
-            unlockedBanners: ['default'],
-            gamesPlayedCount: 0,
-            packsOpenedCount: 0,
-            wheelSpinsCount: 0,
-            clickerTotal: 0,
-            directUnlocksCount: 0,
-            lastDaily: 0,
-            lastSecretClaim: 0,
-            dailyShopPurchases: {},
-            completedAchievements: [],
-            hasPremiumPass: false,
-            passXP: 0,
-            claimedFreeTiers: [],
-            claimedPremiumTiers: []
-        };
-
-        // Perform clean wipe to reset all previous local progress
-        try {
-            localStorage.removeItem('vexel_save_data');
-        } catch(e) {}
-
-        let userData = JSON.parse(JSON.stringify(DEFAULT_USER_DATA));
-
-        function saveState() {
-            try {
-                localStorage.setItem('vexel_save_data', JSON.stringify(userData));
-            } catch(e) {}
-        }
-
-        function resetGameProgress() {
-            try {
-                localStorage.removeItem('vexel_save_data');
-                localStorage.clear();
-            } catch(e) {}
-            userData = JSON.parse(JSON.stringify(DEFAULT_USER_DATA));
-            closeProfileModal();
-            updateUI();
-            alert("🔄 New Account Created! All progress, Vexels, and Vexel Bucks have been reset.");
         }
 
         /* ==========================================================================
@@ -708,54 +778,106 @@
             'dragon': { id: 'dragon', name: 'Dragon Crest', cssClass: 'banner-dragon' }
         };
 
-        /* ==========================================================================
-           BUBBLE LETTER NOTIFICATION & IN-GAME BANNER SYSTEM
-           ========================================================================== */
-        function showBubbleToast(message, icon = "⚡", color = "from-blookYellow to-amber-500") {
-            const container = document.getElementById('bubble-toast-container');
-            if (!container) return;
+        const DEFAULT_USER_DATA = {
+            tokens: 1000,
+            username: 'Guest_Player',
+            password: '',
+            coinRolls: 5,
+            activeBlook: 'spark',
+            activeBanner: 'default',
+            unlockedBlooks: ['spark', 'cat', 'chick'],
+            unlockedBanners: ['default'],
+            gamesPlayedCount: 0,
+            packsOpenedCount: 0,
+            wheelSpinsCount: 0,
+            clickerTotal: 0,
+            directUnlocksCount: 0,
+            lastDaily: 0,
+            lastSecretClaim: 0,
+            dailyShopPurchases: {},
+            completedAchievements: [],
+            hasPremiumPass: false,
+            passXP: 0,
+            claimedFreeTiers: [],
+            claimedPremiumTiers: [],
+            friendsList: []
+        };
 
-            const toast = document.createElement('div');
-            toast.className = `bg-gradient-to-r ${color} border-4 border-white text-blookBg px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-toast-slide font-blooket text-lg uppercase tracking-wide pointer-events-auto`;
-            toast.innerHTML = `
-                <span class="text-3xl animate-bounce">${icon}</span>
-                <span class="drop-shadow-sm">${message}</span>
-            `;
-
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                toast.style.transform = 'translateY(20px)';
-                setTimeout(() => toast.remove(), 300);
-            }, 3200);
-        }
-
-        function triggerGameFeedback(text, colorClass = "from-blookYellow via-amber-400 to-blookPink") {
-            const banner = document.getElementById('game-feedback-banner');
-            if (!banner) return;
-
-            banner.innerText = text;
-            banner.className = `w-full bg-gradient-to-r ${colorClass} border-4 border-white text-blookBg font-blooket text-2xl md:text-3xl text-center py-3 px-6 rounded-2xl shadow-2xl uppercase tracking-wider animate-bubble-pop z-30`;
-            banner.classList.remove('hidden');
-
-            setTimeout(() => {
-                banner.classList.add('hidden');
-            }, 1800);
-        }
-
-        function resetGameProgress() {
+        let userData = (function loadInitialData() {
             try {
-                localStorage.removeItem('vexel_save_data');
-                localStorage.clear();
+                const saved = localStorage.getItem('vexel_save_data');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    return Object.assign({}, DEFAULT_USER_DATA, parsed);
+                }
+            } catch(e) {
+                console.error("Error loading save:", e);
+            }
+            return JSON.parse(JSON.stringify(DEFAULT_USER_DATA));
+        })();
+
+        function saveState() {
+            try {
+                localStorage.setItem('vexel_save_data', JSON.stringify(userData));
+                if (userData.username && userData.username !== 'Guest_Player') {
+                    localStorage.setItem(`vexel_account_${userData.username}`, JSON.stringify(userData));
+                }
             } catch(e) {}
-            userData = JSON.parse(JSON.stringify(DEFAULT_USER_DATA));
-            closeProfileModal();
-            updateUI();
-            showBubbleToast("New Account Created! Progress Reset!", "🔄", "from-blue-500 to-indigo-600");
         }
 
+        /* ==========================================================================
+           ACCOUNT LOGIN & REGISTER HANDLERS
+           ========================================================================== */
+        function handleAccountLogin() {
+            const userIn = document.getElementById('auth-username-input').value.trim();
+            const passIn = document.getElementById('auth-password-input').value.trim();
+
+            if (!userIn || !passIn) {
+                showBubbleToast("Enter Account Name & Password!", "⚠️", "from-rose-500 to-red-600");
+                return;
+            }
+
+            try {
+                const accData = localStorage.getItem(`vexel_account_${userIn}`);
+                if (!accData) {
+                    showBubbleToast("Account Not Found! Use Create Account.", "❌", "from-rose-500 to-red-600");
+                    return;
+                }
+
+                const parsed = JSON.parse(accData);
+                if (parsed.password !== passIn) {
+                    showBubbleToast("Incorrect Password!", "🔒", "from-rose-500 to-red-600");
+                    return;
+                }
+
+                userData = Object.assign({}, DEFAULT_USER_DATA, parsed);
+                saveState();
+                updateUI();
+                showBubbleToast(`Logged In as ${userData.username}!`, "🔑", "from-blookGreen to-emerald-400");
+            } catch(e) {
+                showBubbleToast("Error logging in!", "❌", "from-rose-500 to-red-600");
+            }
+        }
+
+        function handleAccountRegister() {
+            const userIn = document.getElementById('auth-username-input').value.trim();
+            const passIn = document.getElementById('auth-password-input').value.trim();
+
+            if (!userIn || !passIn) {
+                showBubbleToast("Set Account Name & Password!", "⚠️", "from-rose-500 to-red-600");
+                return;
+            }
+
+            userData.username = userIn;
+            userData.password = passIn;
+            saveState();
+            updateUI();
+            showBubbleToast(`Account "${userIn}" Saved!`, "💾", "from-blookBlue to-indigo-500");
+        }
+
+        /* ==========================================================================
+           STARTER VEXELS & ALL 20 MARKET PACK DEFINITIONS
+           ========================================================================== */
         registerVexel('spark', 'Spark Vexel', '⚡', 'common', 'starter');
         registerVexel('cat', 'Cat Vexel', '🐱', 'common', 'starter');
         registerVexel('chick', 'Chick Vexel', '🐥', 'common', 'starter');
@@ -843,27 +965,14 @@
         ];
 
         const PACKS_DATABASE = [];
-
-        // Exact Rarity Order per Pack: 3 Common, 2 Uncommon, 2 Rare, 1 Epic, 1 Legendary, 1 Chroma, 1 Mythic
-        const PACK_RARITY_PATTERN = [
-            'common', 'common', 'common',
-            'uncommon', 'uncommon',
-            'rare', 'rare',
-            'epic',
-            'legendary',
-            'chroma',
-            'mythic'
-        ];
+        const PACK_RARITY_PATTERN = ['common', 'common', 'common', 'uncommon', 'uncommon', 'rare', 'rare', 'epic', 'legendary', 'chroma', 'mythic'];
 
         PACK_THEMES.forEach((theme) => {
             const packItems = [];
-            
             theme.emojis.forEach((emoji, idx) => {
                 const itemId = `${theme.id}_v${idx + 1}`;
                 const rarity = PACK_RARITY_PATTERN[idx];
-                
                 const vexelName = (theme.names && theme.names[idx]) ? theme.names[idx] : `${theme.prefix} Vexel ${idx + 1}`;
-
                 registerVexel(itemId, vexelName, emoji, rarity, theme.id);
                 packItems.push(itemId);
             });
@@ -882,10 +991,9 @@
         });
 
         /* ==========================================================================
-           100 ACHIEVEMENTS ENGINE
+           RESTORED 100 ACHIEVEMENTS ENGINE
            ========================================================================== */
         const ACHIEVEMENTS_DB = [];
-
         function generate100Achievements() {
             ACHIEVEMENTS_DB.length = 0;
 
@@ -905,7 +1013,7 @@
                 });
             });
 
-            const unlockMilestones = [3, 5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 100, 150, 200, 300];
+            const unlockMilestones = [3, 5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 100, 150, 200, 220];
             unlockMilestones.forEach((m, idx) => {
                 ACHIEVEMENTS_DB.push({
                     id: `ach_unlock_${m}`, num: idx + 31, title: `Collector Level ${idx + 1}`,
@@ -954,10 +1062,8 @@
 
         function checkAchievements() {
             let completedCount = userData.completedAchievements.length;
-
             ACHIEVEMENTS_DB.forEach(ach => {
                 if (userData.completedAchievements.includes(ach.id)) return;
-
                 let isDone = false;
                 if (ach.type === 'gamesPlayed' && userData.gamesPlayedCount >= ach.val) isDone = true;
                 if (ach.type === 'packsOpened' && userData.packsOpenedCount >= ach.val) isDone = true;
@@ -980,18 +1086,16 @@
             checkAchievements();
             const list = document.getElementById('achievements-list');
             const summary = document.getElementById('achievements-progress-summary');
-            if(!list) return;
+            if (!list) return;
 
             const totalDone = userData.completedAchievements.length;
             if (summary) summary.innerText = `Completed: ${totalDone} / 100 Achievements`;
 
             list.innerHTML = '';
-
             ACHIEVEMENTS_DB.forEach(ach => {
                 const isCompleted = userData.completedAchievements.includes(ach.id);
                 const card = document.createElement('div');
-                card.className = `p-4 rounded-2xl border-2 flex items-center justify-between gap-4 shadow-md transition-all ${isCompleted ? 'bg-indigo-950/90 border-blookGreen' : 'bg-blookCard border-blookBorder opacity-80'}`;
-                
+                card.className = `p-4 rounded-2xl border-2 flex items-center justify-between gap-4 shadow-md ${isCompleted ? 'bg-indigo-950/90 border-blookGreen' : 'bg-blookCard border-blookBorder opacity-80'}`;
                 card.innerHTML = `
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl ${isCompleted ? 'bg-blookGreen text-white' : 'bg-indigo-950 text-indigo-400 border border-indigo-800'} flex items-center justify-center font-black text-sm">
@@ -1014,38 +1118,19 @@
         }
 
         /* ==========================================================================
-           TAB NAVIGATION & UI UPDATER
+           CLICKER MINER
            ========================================================================== */
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => {
-                el.classList.add('hidden');
-                el.classList.remove('flex');
-            });
-
-            const activeTab = document.getElementById(tabId);
-            if (activeTab) {
-                activeTab.classList.remove('hidden');
-                activeTab.classList.add('flex');
-            }
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-blookBlue');
-                btn.classList.add('bg-blookCard');
-            });
-
-            const activeNav = document.getElementById(`nav-${tabId}`);
-            if (activeNav) {
-                activeNav.classList.add('bg-blookBlue');
-                activeNav.classList.remove('bg-blookCard');
-            }
-
-            if (tabId === 'wheel-tab') drawWheel();
-            if (tabId === 'trading-tab') renderTradingPlaza();
-            if (tabId === 'friends-tab') renderFriends();
+        function clickerMine() {
+            userData.tokens += 10;
+            userData.clickerTotal += 10;
+            const display = document.getElementById('clicker-total-display');
+            if (display) display.innerText = `⚡ ${userData.clickerTotal.toLocaleString()}`;
+            triggerGameFeedback("+10 VEXEL BUCKS! ⚡", "from-blookYellow to-amber-500");
+            updateUI();
         }
 
         /* ==========================================================================
-           DAILY VEXEL SHOP LOGIC
+           DAILY VEXEL DIRECT SHOP LOGIC
            ========================================================================== */
         const DAILY_SHOP_SLOTS = [
             { id: 0, rarity: 'common', price: 50 },
@@ -1069,25 +1154,15 @@
         function getDailyShopItems() {
             const todayKey = new Date().toISOString().slice(0, 10);
             const allKeys = Object.keys(BLOOKS_DATABASE);
-            
-            // Deterministic daily selection based on date string
             let seed = 0;
-            for (let i = 0; i < todayKey.length; i++) {
-                seed += todayKey.charCodeAt(i);
-            }
+            for (let i = 0; i < todayKey.length; i++) seed += todayKey.charCodeAt(i);
 
             const items = [];
             DAILY_SHOP_SLOTS.forEach((slot, idx) => {
                 const filtered = allKeys.filter(k => BLOOKS_DATABASE[k].rarity === slot.rarity);
                 if (filtered.length > 0) {
                     const pickIndex = (seed + idx * 7) % filtered.length;
-                    items.push({
-                        slotId: slot.id,
-                        vexelId: filtered[pickIndex],
-                        price: slot.price,
-                        rarity: slot.rarity,
-                        dateKey: todayKey
-                    });
+                    items.push({ slotId: slot.id, vexelId: filtered[pickIndex], price: slot.price, dateKey: todayKey });
                 }
             });
             return { todayKey, items };
@@ -1099,31 +1174,19 @@
             grid.innerHTML = '';
 
             const { todayKey, items } = getDailyShopItems();
-
             items.forEach(item => {
                 const v = BLOOKS_DATABASE[item.vexelId];
                 if (!v) return;
 
                 const purchaseKey = `${todayKey}_slot_${item.slotId}`;
                 const isBought = !!userData.dailyShopPurchases[purchaseKey];
-                const isAlreadyOwned = userData.unlockedBlooks.includes(item.vexelId);
-
-                let rarityBorder = 'border-gray-500';
-                if (v.rarity === 'uncommon') rarityBorder = 'border-green-500';
-                if (v.rarity === 'rare') rarityBorder = 'border-blue-500';
-                if (v.rarity === 'epic') rarityBorder = 'border-purple-500';
-                if (v.rarity === 'legendary') rarityBorder = 'border-amber-500';
-                if (v.rarity === 'chroma') rarityBorder = 'border-rose-500';
-                if (v.rarity === 'mythic') rarityBorder = 'border-cyan-400';
 
                 const slotCard = document.createElement('div');
-                slotCard.className = `bg-indigo-950 border-2 ${rarityBorder} rounded-2xl p-2.5 flex flex-col items-center justify-between text-center gap-1.5 shadow ${isBought ? 'opacity-50' : ''}`;
-                
+                slotCard.className = `bg-indigo-950 border-2 border-indigo-700 rounded-2xl p-2.5 flex flex-col items-center justify-between text-center gap-1.5 shadow ${isBought ? 'opacity-50' : ''}`;
                 slotCard.innerHTML = `
                     <div class="text-3xl">${v.emoji}</div>
                     <span class="text-[10px] font-black text-white leading-tight truncate w-full">${v.name}</span>
                     <span class="text-[8px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-blookCard text-indigo-200 border border-indigo-700">${v.rarity}</span>
-                    
                     ${isBought ? `
                         <span class="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-1 rounded-lg border border-emerald-800 uppercase w-full">PURCHASED</span>
                     ` : `
@@ -1136,256 +1199,27 @@
             });
         }
 
-        function buyDailyShopVexel(slotId, vexelId, price) {
-            const todayKey = new Date().toISOString().slice(0, 10);
-            const purchaseKey = `${todayKey}_slot_${slotId}`;
-
-            if (userData.dailyShopPurchases[purchaseKey]) {
-                showBubbleToast("Already Purchased Today!", "✅", "from-emerald-500 to-teal-600");
-                return;
-            }
-
-            if (userData.tokens < price) {
-                showBubbleToast(`Need ⚡ ${price.toLocaleString()} Vexel Bucks!`, "🔒", "from-rose-500 to-red-600");
-                return;
-            }
-
-            const v = BLOOKS_DATABASE[vexelId];
-            userData.tokens -= price;
-            userData.dailyShopPurchases[purchaseKey] = true;
-
-            if (!userData.unlockedBlooks.includes(vexelId)) {
-                userData.unlockedBlooks.push(vexelId);
-            }
-
-            showBubbleToast(`Unlocked ${v.name}!`, v.emoji, "from-blookGreen to-emerald-400");
-            updateUI();
-        }
-
-        function updateUI() {
-            saveState();
-            document.getElementById('user-tokens-display').innerText = userData.tokens.toLocaleString();
-            document.getElementById('nav-username-display').innerText = userData.username;
-            
-            const wheelRollsDisplay = document.getElementById('wheel-rolls-display');
-            if (wheelRollsDisplay) wheelRollsDisplay.innerText = userData.coinRolls;
-
-            const currentVexel = BLOOKS_DATABASE[userData.activeBlook];
-            if (currentVexel) {
-                document.getElementById('nav-active-blook-icon').innerText = currentVexel.emoji;
-            }
-
-            const completionText = document.getElementById('locker-completion-text');
-            if (completionText) {
-                completionText.innerText = `Collection Progress: ${userData.unlockedBlooks.length} Vexels Unlocked`;
-            }
-
-            renderDailyShop();
-            renderMarket();
-            renderLocker();
-            renderAchievements();
-            renderVexelPass();
-        }
-
-        function promptUsernameChange() {
-            const newName = prompt("Enter new Vexel Master username:", userData.username);
-            if (newName && newName.trim() !== "") {
-                userData.username = newName.trim();
-                updateUI();
-            }
-        }
-
         /* ==========================================================================
-           VEXEL PASS SYSTEM
+           SECRET CORNER REWARD (15,000 VEXEL BUCKS)
            ========================================================================== */
-        const VEXEL_PASS_TIERS = [
-            { tier: 1, reqXP: 100, free: { label: "⚡ 500 Vexel Bucks", type: "tokens", val: 500 }, premium: { label: "🎲 +3 Free Rolls", type: "rolls", val: 3 } },
-            { tier: 2, reqXP: 250, free: { label: "🎲 +1 Free Roll", type: "rolls", val: 1 }, premium: { label: "⚡ 2,500 Vexel Bucks", type: "tokens", val: 2500 } },
-            { tier: 3, reqXP: 450, free: { label: "⚡ 1,000 Vexel Bucks", type: "tokens", val: 1000 }, premium: { label: "🎄 Frosty Snowman", type: "vexel", val: "christmas_v4" } },
-            { tier: 4, reqXP: 700, free: { label: "🎨 Neon Wave Banner", type: "banner", val: "neon" }, premium: { label: "⚡ 5,000 Vexel Bucks", type: "tokens", val: 5000 } },
-            { tier: 5, reqXP: 1000, free: { label: "🎃 Phantom Ghost", type: "vexel", val: "halloween_v2" }, premium: { label: "🎲 +5 Free Rolls", type: "rolls", val: 5 } },
-            { tier: 6, reqXP: 1350, free: { label: "⚡ 2,000 Vexel Bucks", type: "tokens", val: 2000 }, premium: { label: "⚡ 10,000 Vexel Bucks", type: "tokens", val: 10000 } },
-            { tier: 7, reqXP: 1750, free: { label: "🎲 +3 Free Rolls", type: "rolls", val: 3 }, premium: { label: "🏺 Royal Temple", type: "vexel", val: "egypt_v5" } },
-            { tier: 8, reqXP: 2200, free: { label: "⚡ 3,500 Vexel Bucks", type: "tokens", val: 3500 }, premium: { label: "🎨 Cosmic Galaxy Banner", type: "banner", val: "cosmic" } },
-            { tier: 9, reqXP: 2700, free: { label: "🍂 Harvest Squirrel", type: "vexel", val: "fall_v4" }, premium: { label: "⚡ 15,000 Vexel Bucks", type: "tokens", val: 15000 } },
-            { tier: 10, reqXP: 3300, free: { label: "⚡ 5,000 Vexel Bucks", type: "tokens", val: 5000 }, premium: { label: "👑 Pharaoh King (Legendary)", type: "vexel", val: "egypt_v8" } },
-            { tier: 11, reqXP: 4000, free: { label: "🎲 +5 Free Rolls", type: "rolls", val: 5 }, premium: { label: "⚡ 25,000 Vexel Bucks", type: "tokens", val: 25000 } },
-            { tier: 12, reqXP: 4800, free: { label: "🚀 Deep Galaxy", type: "vexel", val: "space_v6" }, premium: { label: "🎨 Cyber Grid Banner", type: "banner", val: "cyber" } },
-            { tier: 13, reqXP: 5700, free: { label: "⚡ 10,000 Vexel Bucks", type: "tokens", val: 10000 }, premium: { label: "⚡ 40,000 Vexel Bucks", type: "tokens", val: 40000 } },
-            { tier: 14, reqXP: 6700, free: { label: "🎲 +10 Free Rolls", type: "rolls", val: 10 }, premium: { label: "🎨 Royal Gold Banner", type: "banner", val: "gold" } },
-            { tier: 15, reqXP: 8000, free: { label: "⚡ 25,000 Vexel Bucks", type: "tokens", val: 25000 }, premium: { label: "👾 Alien Overlord (Mythic)", type: "vexel", val: "space_v8" } }
-        ];
+        function claimSecretVexelBucks() {
+            const now = Date.now();
+            const oneMonth = 30 * 24 * 60 * 60 * 1000;
 
-        function unlockPremiumPass() {
-            if (userData.hasPremiumPass) {
-                showBubbleToast("Premium Pass Already Active!", "✨", "from-purple-500 to-indigo-600");
+            if (userData.lastSecretClaim && (now - userData.lastSecretClaim < oneMonth)) {
+                const remainingDays = Math.ceil((oneMonth - (now - userData.lastSecretClaim)) / (1000 * 60 * 60 * 24));
+                showBubbleToast(`Available in ${remainingDays} Days!`, "⏰", "from-amber-500 to-orange-600");
                 return;
             }
 
-            if (userData.tokens < 50000) {
-                showBubbleToast("Need ⚡ 50,000 Vexel Bucks!", "🔒", "from-rose-500 to-red-600");
-                return;
-            }
-
-            userData.tokens -= 50000;
-            userData.hasPremiumPass = true;
-            showBubbleToast("PREMIUM PASS UNLOCKED!", "👑", "from-blookYellow to-amber-500");
+            userData.lastSecretClaim = now;
+            userData.tokens += 15000;
             updateUI();
-        }
-
-        function claimPassReward(tierNum, isPremium) {
-            const tierObj = VEXEL_PASS_TIERS.find(t => t.tier === tierNum);
-            if (!tierObj) return;
-
-            if (userData.passXP < tierObj.reqXP) {
-                showBubbleToast(`Requires ${tierObj.reqXP} Pass XP!`, "🔒", "from-rose-500 to-red-600");
-                return;
-            }
-
-            if (isPremium && !userData.hasPremiumPass) {
-                showBubbleToast("Unlock Premium Pass First!", "👑", "from-purple-500 to-indigo-600");
-                return;
-            }
-
-            const rewardList = isPremium ? userData.claimedPremiumTiers : userData.claimedFreeTiers;
-            if (rewardList.includes(tierNum)) {
-                showBubbleToast("Reward Already Claimed!", "✅", "from-emerald-500 to-teal-600");
-                return;
-            }
-
-            const reward = isPremium ? tierObj.premium : tierObj.free;
-
-            if (reward.type === "tokens") {
-                userData.tokens += reward.val;
-            } else if (reward.type === "rolls") {
-                userData.coinRolls += reward.val;
-            } else if (reward.type === "vexel") {
-                if (!userData.unlockedBlooks.includes(reward.val)) {
-                    userData.unlockedBlooks.push(reward.val);
-                }
-            } else if (reward.type === "banner") {
-                if (!userData.unlockedBanners.includes(reward.val)) {
-                    userData.unlockedBanners.push(reward.val);
-                }
-            }
-
-            rewardList.push(tierNum);
-            showBubbleToast(`Claimed: ${reward.label}`, "🎁", "from-blookGreen to-emerald-400");
-            updateUI();
-        }
-
-        function renderVexelPass() {
-            const container = document.getElementById('pass-tiers-container');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const statusText = document.getElementById('pass-status-text');
-            const unlockBtn = document.getElementById('unlock-premium-pass-btn');
-            
-            if (userData.hasPremiumPass) {
-                if (statusText) statusText.innerText = '✨ Premium Pass Active! All premium tier rewards unlocked!';
-                if (unlockBtn) {
-                    unlockBtn.innerText = 'PREMIUM UNLOCKED ✅';
-                    unlockBtn.disabled = true;
-                    unlockBtn.className = 'bg-emerald-600 text-white font-black px-6 py-3.5 rounded-2xl text-sm uppercase shadow cursor-default opacity-80';
-                }
-            } else {
-                if (statusText) statusText.innerText = 'Unlock the Premium Track to get 2x rewards on every tier!';
-                if (unlockBtn) {
-                    unlockBtn.innerText = 'Unlock Premium (⚡ 50,000)';
-                    unlockBtn.disabled = false;
-                    unlockBtn.className = 'btn-3d bg-blookYellow hover:bg-yellow-400 text-blookBg font-black px-6 py-3.5 rounded-2xl border-b-4 border-yellow-700 text-sm uppercase shadow-lg';
-                }
-            }
-
-            VEXEL_PASS_TIERS.forEach(t => {
-                const isUnlocked = userData.passXP >= t.reqXP;
-                const freeClaimed = userData.claimedFreeTiers.includes(t.tier);
-                const premiumClaimed = userData.claimedPremiumTiers.includes(t.tier);
-
-                const tierCard = document.createElement('div');
-                tierCard.className = `bg-indigo-950 border-2 ${isUnlocked ? 'border-purple-500' : 'border-indigo-900 opacity-70'} rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow`;
-                
-                tierCard.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl ${isUnlocked ? 'bg-purple-600 text-white' : 'bg-indigo-900 text-indigo-400'} flex flex-col items-center justify-center font-black">
-                            <span class="text-[9px] uppercase leading-none">TIER</span>
-                            <span class="text-lg leading-none">${t.tier}</span>
-                        </div>
-                        <div>
-                            <h4 class="font-black text-white text-base">Tier ${t.tier} (${t.reqXP} XP)</h4>
-                            <p class="text-xs text-indigo-300 font-bold">${isUnlocked ? 'Unlocked ✅' : `Requires ${t.reqXP - userData.passXP} more XP`}</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                        <!-- Free Reward -->
-                        <div class="bg-blookCard border border-indigo-700 p-2.5 rounded-xl flex items-center justify-between gap-3 min-w-[200px]">
-                            <div>
-                                <span class="text-[8px] font-black uppercase text-indigo-300 block">FREE REWARD</span>
-                                <span class="text-xs font-black text-white">${t.free.label}</span>
-                            </div>
-                            ${freeClaimed ? `
-                                <span class="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-1 rounded-lg border border-emerald-800">CLAIMED</span>
-                            ` : `
-                                <button onclick="claimPassReward(${t.tier}, false)" class="btn-3d bg-blookBlue hover:bg-blue-500 text-white font-black text-[10px] px-2.5 py-1.5 rounded-lg border-b-2 border-blue-900 uppercase ${!isUnlocked ? 'opacity-50 cursor-not-allowed' : ''}">Claim</button>
-                            `}
-                        </div>
-
-                        <!-- Premium Reward -->
-                        <div class="bg-gradient-to-r from-purple-950 to-indigo-950 border border-purple-500/50 p-2.5 rounded-xl flex items-center justify-between gap-3 min-w-[220px]">
-                            <div>
-                                <span class="text-[8px] font-black uppercase text-amber-400 block">👑 PREMIUM REWARD</span>
-                                <span class="text-xs font-black text-blookYellow">${t.premium.label}</span>
-                            </div>
-                            ${premiumClaimed ? `
-                                <span class="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-1 rounded-lg border border-emerald-800">CLAIMED</span>
-                            ` : `
-                                <button onclick="claimPassReward(${t.tier}, true)" class="btn-3d bg-blookYellow hover:bg-yellow-400 text-blookBg font-black text-[10px] px-2.5 py-1.5 rounded-lg border-b-2 border-yellow-700 uppercase ${(!isUnlocked || !userData.hasPremiumPass) ? 'opacity-50 cursor-not-allowed' : ''}">Claim</button>
-                            `}
-                        </div>
-                    </div>
-                `;
-                container.appendChild(tierCard);
-            });
-        }
-
-        function updateUI() {
-            saveState();
-            document.getElementById('user-tokens-display').innerText = userData.tokens.toLocaleString();
-            document.getElementById('nav-username-display').innerText = userData.username;
-            
-            const activeBannerObj = BANNERS_DATABASE[userData.activeBanner] || BANNERS_DATABASE['default'];
-            const headerBanner = document.getElementById('header-profile-banner');
-            if (headerBanner) {
-                headerBanner.className = `${activeBannerObj.cssClass} flex items-center gap-2 border-2 px-3 py-1.5 rounded-xl cursor-pointer transition-transform hover:scale-105 shadow-md`;
-            }
-            const bannerNameEl = document.getElementById('nav-banner-name');
-            if (bannerNameEl) bannerNameEl.innerText = activeBannerObj.name;
-
-            const wheelRollsDisplay = document.getElementById('wheel-rolls-display');
-            if (wheelRollsDisplay) wheelRollsDisplay.innerText = userData.coinRolls;
-
-            const currentVexel = BLOOKS_DATABASE[userData.activeBlook];
-            if (currentVexel) {
-                document.getElementById('nav-active-blook-icon').innerText = currentVexel.emoji;
-            }
-
-            const completionText = document.getElementById('locker-completion-text');
-            if (completionText) {
-                completionText.innerText = `Collection Progress: ${userData.unlockedBlooks.length} Vexels Unlocked`;
-            }
-
-            renderDailyShop();
-            renderMarket();
-            renderLocker();
-            renderAchievements();
-            renderVexelPass();
-            renderProfileModal();
+            showBubbleToast("SECRET UNLOCKED! +15,000 BUCKS!", "⚡", "from-blookYellow via-amber-400 to-blookPink");
         }
 
         /* ==========================================================================
-           PROFILE MODAL & BANNER SYSTEM
+           PROFILE MODAL RENDER & BANNER SELECTOR
            ========================================================================== */
         function openProfileModal() {
             renderProfileModal();
@@ -1409,9 +1243,7 @@
             const activeBannerObj = BANNERS_DATABASE[userData.activeBanner] || BANNERS_DATABASE['default'];
 
             const prevCard = document.getElementById('profile-card-preview');
-            if (prevCard) {
-                prevCard.className = `w-full ${activeBannerObj.cssClass} border-4 rounded-2xl p-5 flex items-center justify-between shadow-xl transition-all`;
-            }
+            if (prevCard) prevCard.className = `w-full ${activeBannerObj.cssClass} border-4 rounded-2xl p-5 flex items-center justify-between shadow-xl`;
 
             const prevIcon = document.getElementById('profile-preview-icon');
             if (prevIcon && currentVexel) prevIcon.innerText = currentVexel.emoji;
@@ -1432,7 +1264,6 @@
 
                 const bCard = document.createElement('div');
                 bCard.className = `${b.cssClass} border-2 rounded-xl p-3 flex flex-col items-center justify-between gap-2 shadow cursor-pointer transition-transform hover:scale-105 ${!isUnlocked ? 'opacity-50' : ''}`;
-                
                 bCard.innerHTML = `
                     <span class="font-black text-xs text-white drop-shadow">${b.name}</span>
                     ${isActive ? `
@@ -1457,702 +1288,960 @@
             updateUI();
         }
 
-        function promptUsernameChange() {
-            const newName = prompt("Enter new Vexel Master username:", userData.username);
-            if (newName && newName.trim() !== "") {
-                userData.username = newName.trim();
-                updateUI();
-            }
-        }
-
         /* ==========================================================================
-           MARKET & PACK OPENER
+           FRIENDS LIST ENGINE (CLEARED / REAL FRIENDS ONLY)
            ========================================================================== */
-        function openPack(packId, amount = 1) {
-            const pack = PACKS_DATABASE.find(p => p.id === packId);
-            if (!pack) return;
-
-            let openCount = Math.min(100, Math.max(1, amount));
-            const totalCost = pack.cost * openCount;
-
-            if (userData.tokens < totalCost) {
-                showBubbleToast(`Need ⚡ ${totalCost.toLocaleString()} Vexel Bucks!`, "🔒", "from-rose-500 to-red-600");
-                return;
-            }
-
-            userData.tokens -= totalCost;
-            userData.packsOpenedCount += openCount;
-            userData.passXP += openCount * 25;
-            
-            let weightedPool = [];
-            pack.items.forEach(itemId => {
-                const v = BLOOKS_DATABASE[itemId];
-                const weight = Math.max(1, Math.floor(RARITY_WEIGHTS[v.rarity] * 10));
-                for(let i = 0; i < weight; i++) {
-                    weightedPool.push(itemId);
-                }
-            });
-
-            const wonVexels = [];
-            let rollsEarned = 0;
-
-            for (let i = 0; i < openCount; i++) {
-                const wonId = weightedPool[Math.floor(Math.random() * weightedPool.length)];
-                const wonVexel = BLOOKS_DATABASE[wonId];
-
-                if (!userData.unlockedBlooks.includes(wonId)) {
-                    userData.unlockedBlooks.push(wonId);
-                }
-
-                if (wonVexel.rarity === 'mythic') {
-                    rollsEarned += 3;
-                } else if (wonVexel.rarity === 'chroma') {
-                    rollsEarned += 1;
-                }
-
-                wonVexels.push(wonVexel);
-            }
-
-            userData.coinRolls += rollsEarned;
-
-            updateUI();
-            triggerPackAnimation(pack, wonVexels, rollsEarned, openCount);
-        }
-
-        function triggerPackAnimation(pack, wonVexels, rollsEarned, openCount) {
-            const modal = document.getElementById('pack-opener-modal');
-            const packStage = document.getElementById('opener-pack-stage');
-            const revealStage = document.getElementById('opener-reveal-stage');
-            const packCard = document.getElementById('opener-pack-card');
-
-            const singleView = document.getElementById('single-card-view');
-            const multiView = document.getElementById('multi-card-view');
-
-            packCard.className = `w-56 h-72 md:w-64 md:h-80 rounded-3xl border-8 p-6 flex flex-col items-center justify-between shadow-2xl relative cursor-pointer bg-gradient-to-b ${pack.bgColor} ${pack.borderColor} animate-pack-shake`;
-            document.getElementById('opener-pack-icon').innerText = pack.icon;
-            document.getElementById('opener-pack-title').innerText = openCount > 1 ? `${openCount}x ${pack.name}` : pack.name;
-
-            packStage.classList.remove('hidden');
-            packStage.classList.add('flex');
-            revealStage.classList.add('hidden');
-            revealStage.classList.remove('flex');
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-
-            setTimeout(() => {
-                packStage.classList.add('hidden');
-                packStage.classList.remove('flex');
-
-                if (openCount === 1) {
-                    singleView.classList.remove('hidden');
-                    multiView.classList.add('hidden');
-
-                    const wonVexel = wonVexels[0];
-                    const revCard = document.getElementById('revealed-vexel-card');
-                    let rarityClass = 'rarity-common';
-                    let rarityBg = 'bg-gray-500';
-
-                    if (wonVexel.rarity === 'uncommon') { rarityClass = 'rarity-uncommon'; rarityBg = 'bg-green-600'; }
-                    if (wonVexel.rarity === 'rare') { rarityClass = 'rarity-rare'; rarityBg = 'bg-blue-600'; }
-                    if (wonVexel.rarity === 'epic') { rarityClass = 'rarity-epic'; rarityBg = 'bg-purple-600'; }
-                    if (wonVexel.rarity === 'legendary') { rarityClass = 'rarity-legendary'; rarityBg = 'bg-amber-500'; }
-                    if (wonVexel.rarity === 'chroma') { rarityClass = 'rarity-chroma'; rarityBg = 'bg-rose-600'; }
-                    if (wonVexel.rarity === 'mythic') { rarityClass = 'rarity-mythic'; rarityBg = 'bg-cyan-500'; }
-
-                    revCard.className = `w-64 h-88 md:w-72 md:h-96 rounded-3xl border-8 bg-blookCard p-6 flex flex-col items-center justify-between shadow-2xl animate-card-reveal relative ${rarityClass}`;
-                    
-                    const badge = document.getElementById('revealed-rarity-badge');
-                    badge.className = `px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest text-white shadow-md ${rarityBg}`;
-                    badge.innerText = wonVexel.rarity;
-
-                    document.getElementById('revealed-emoji').innerText = wonVexel.emoji;
-                    document.getElementById('revealed-name').innerText = wonVexel.name;
-
-                    const bonusEl = document.getElementById('revealed-roll-bonus');
-                    if (rollsEarned > 0) {
-                        bonusEl.innerText = `+${rollsEarned} FREE Coin Roll Earned! 🎲`;
-                        bonusEl.classList.remove('hidden');
-                    } else {
-                        bonusEl.classList.add('hidden');
-                    }
-                } else {
-                    singleView.classList.add('hidden');
-                    multiView.classList.remove('hidden');
-                    multiView.classList.add('flex');
-
-                    document.getElementById('multi-reveal-title').innerText = `Unboxed ${openCount}x ${pack.name}!`;
-                    const multiGrid = document.getElementById('multi-reveal-grid');
-                    multiGrid.innerHTML = '';
-
-                    wonVexels.forEach(v => {
-                        let rarityBorder = 'border-gray-500';
-                        if (v.rarity === 'uncommon') rarityBorder = 'border-green-500';
-                        if (v.rarity === 'rare') rarityBorder = 'border-blue-500';
-                        if (v.rarity === 'epic') rarityBorder = 'border-purple-500';
-                        if (v.rarity === 'legendary') rarityBorder = 'border-amber-500';
-                        if (v.rarity === 'chroma') rarityBorder = 'border-rose-500 shadow-sm shadow-rose-500';
-                        if (v.rarity === 'mythic') rarityBorder = 'border-cyan-400 shadow-md shadow-cyan-400';
-
-                        const item = document.createElement('div');
-                        item.className = `bg-blookCard border-2 ${rarityBorder} rounded-xl p-2 flex flex-col items-center text-center gap-1`;
-                        item.innerHTML = `
-                            <div class="text-2xl">${v.emoji}</div>
-                            <span class="text-[9px] font-black leading-tight text-white truncate w-full">${v.name}</span>
-                            <span class="text-[7px] font-extrabold uppercase px-1 rounded bg-indigo-950 text-indigo-200">${v.rarity}</span>
-                        `;
-                        multiGrid.appendChild(item);
-                    });
-
-                    const summaryEl = document.getElementById('multi-roll-summary');
-                    if (rollsEarned > 0) {
-                        summaryEl.innerText = `🎉 Total Bonus Rolls Earned: +${rollsEarned} FREE Coin Rolls! 🎲`;
-                    } else {
-                        summaryEl.innerText = '';
-                    }
-                }
-
-                revealStage.classList.remove('hidden');
-                revealStage.classList.add('flex');
-            }, 1200);
-        }
-
-        function closePackOpenerModal() {
-            const modal = document.getElementById('pack-opener-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            renderLocker();
-            renderAchievements();
-        }
-
-        function renderMarket() {
-            const grid = document.getElementById('market-packs-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
-
-            PACKS_DATABASE.forEach(pack => {
-                const maxAfford = Math.min(100, Math.floor(userData.tokens / pack.cost));
-                const packCard = document.createElement('div');
-                packCard.className = `bg-gradient-to-b ${pack.bgColor} border-4 ${pack.borderColor} rounded-3xl p-5 flex flex-col items-center justify-between gap-3 shadow-blook-card hover:scale-105 transition-transform`;
-                packCard.innerHTML = `
-                    <div class="text-6xl animate-float">${pack.icon}</div>
-                    <div class="text-center w-full">
-                        <h3 class="font-blooket text-xl text-white drop-shadow">${pack.name}</h3>
-                        <div class="mt-1 bg-black/60 border border-white/20 rounded-xl px-2.5 py-1 flex items-center justify-between">
-                            <span class="text-[9px] text-gray-300 font-extrabold uppercase">Top Chase:</span>
-                            <span class="text-xs font-black text-blookYellow">${pack.featured || 'Chroma Vexel 🌟'}</span>
-                        </div>
-                    </div>
-                    <div class="w-full space-y-1.5">
-                        <button onclick="openPack('${pack.id}', 1)" class="btn-3d w-full ${pack.btnColor} text-white font-extrabold py-2 rounded-xl border-b-4 text-xs flex items-center justify-center gap-2 shadow-md">
-                            <span>Open 1x (${pack.cost} ⚡)</span>
-                        </button>
-                        <div class="grid grid-cols-3 gap-1">
-                            <button onclick="openPack('${pack.id}', 10)" class="btn-3d bg-indigo-900 hover:bg-indigo-800 text-white font-black py-1.5 rounded-lg border-b-2 border-indigo-950 text-[10px]">
-                                10x
-                            </button>
-                            <button onclick="openPack('${pack.id}', 50)" class="btn-3d bg-indigo-900 hover:bg-indigo-800 text-white font-black py-1.5 rounded-lg border-b-2 border-indigo-950 text-[10px]">
-                                50x
-                            </button>
-                            <button onclick="openPack('${pack.id}', ${Math.max(1, maxAfford)})" class="btn-3d bg-indigo-900 hover:bg-indigo-800 text-blookYellow font-black py-1.5 rounded-lg border-b-2 border-indigo-950 text-[10px]">
-                                MAX (${Math.max(1, maxAfford)})
-                            </button>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(packCard);
-            });
-        }
-
-        /* ==========================================================================
-           LOCKER RENDERING WITH PACK SECTIONS & DIRECT PURCHASES
-           ========================================================================== */
-        function renderLocker() {
-            const container = document.getElementById('locker-packs-container');
-            if(!container) return;
-            container.innerHTML = '';
-
-            PACKS_DATABASE.forEach(pack => {
-                const packSection = document.createElement('div');
-                packSection.className = 'bg-indigo-950/60 border-2 border-blookBorder rounded-3xl p-5 space-y-4 shadow-lg';
-                
-                let packHeaderHTML = `
-                    <div class="flex items-center justify-between border-b border-blookBorder pb-3">
-                        <div class="flex items-center gap-3">
-                            <span class="text-3xl">${pack.icon}</span>
-                            <h3 class="font-blooket text-xl text-white">${pack.name}</h3>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3">
-                `;
-
-                let cardsHTML = '';
-
-                pack.items.forEach(itemId => {
-                    const b = BLOOKS_DATABASE[itemId];
-                    if (!b) return;
-
-                    const isUnlocked = userData.unlockedBlooks.includes(itemId);
-                    const unlockCost = RARITY_DIRECT_PRICES[b.rarity] || 500;
-
-                    let rarityClass = 'border-blookBorder';
-                    if (b.rarity === 'chroma') rarityClass = 'rarity-chroma';
-                    if (b.rarity === 'mythic') rarityClass = 'rarity-mythic';
-
-                    if (isUnlocked) {
-                        cardsHTML += `
-                            <div onclick="selectActiveVexel('${itemId}')" class="bg-blookCard border-4 rounded-2xl p-3 flex flex-col items-center gap-1.5 cursor-pointer transition-transform hover:scale-105 ${rarityClass}">
-                                <div class="text-3xl">${b.emoji}</div>
-                                <span class="text-[10px] font-black text-center leading-tight truncate w-full">${b.name}</span>
-                                <span class="text-[8px] uppercase font-extrabold px-1.5 py-0.5 rounded-full bg-indigo-950 text-indigo-200 border border-indigo-700">${b.rarity}</span>
-                                ${userData.activeBlook === itemId ? '<span class="text-[8px] font-black text-blookGreen uppercase">EQUIPPED</span>' : ''}
-                            </div>
-                        `;
-                    } else {
-                        cardsHTML += `
-                            <div onclick="directBuyVexel('${itemId}')" class="bg-blookCard border-4 border-gray-800 rounded-2xl p-3 flex flex-col items-center gap-1.5 cursor-pointer transition-transform hover:scale-105 vexel-locked">
-                                <div class="text-3xl text-gray-500">${b.emoji}</div>
-                                <span class="text-[10px] font-black text-center leading-tight text-gray-400 truncate w-full">${b.name}</span>
-                                <div class="bg-black/80 border border-yellow-500/40 px-2 py-0.5 rounded-lg text-[9px] font-black text-blookYellow">
-                                    ⚡ ${unlockCost.toLocaleString()}
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                packSection.innerHTML = packHeaderHTML + cardsHTML + `</div>`;
-                container.appendChild(packSection);
-            });
-        }
-
-        function selectActiveVexel(id) {
-            userData.activeBlook = id;
-            updateUI();
-        }
-
-        function directBuyVexel(id) {
-            const b = BLOOKS_DATABASE[id];
-            if (!b) return;
-
-            const unlockCost = RARITY_DIRECT_PRICES[b.rarity] || 500;
-            if (userData.tokens >= unlockCost) {
-                userData.tokens -= unlockCost;
-                userData.unlockedBlooks.push(id);
-                userData.directUnlocksCount += 1;
-                showBubbleToast(`Unlocked ${b.name}!`, b.emoji, "from-blookGreen to-emerald-400");
-                updateUI();
-            } else {
-                const needed = unlockCost - userData.tokens;
-                showBubbleToast(`Need ⚡ ${needed.toLocaleString()} More Bucks!`, "🔒", "from-rose-500 to-red-600");
-            }
-        }
-
-        /* ==========================================================================
-           WHEEL ENGINE
-           ========================================================================== */
-        const wheelSlices = [
-            { label: '50 ⚡', val: 50, color: '#3182ce' },
-            { label: '100 ⚡', val: 100, color: '#38a169' },
-            { label: '250 ⚡', val: 250, color: '#805ad5' },
-            { label: '500 ⚡', val: 500, color: '#dd6b20' },
-            { label: '10 ⚡', val: 10, color: '#718096' },
-            { label: '1000 ⚡', val: 1000, color: '#d69e2e' }
-        ];
-
-        let wheelAngle = 0;
-        let isSpinning = false;
-
-        function drawWheel() {
-            const canvas = document.getElementById('wheel-canvas');
-            if(!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const numSlices = wheelSlices.length;
-            const sliceAngle = (2 * Math.PI) / numSlices;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            wheelSlices.forEach((slice, i) => {
-                const angle = wheelAngle + i * sliceAngle;
-                ctx.beginPath();
-                ctx.fillStyle = slice.color;
-                ctx.moveTo(160, 160);
-                ctx.arc(160, 160, 150, angle, angle + sliceAngle);
-                ctx.lineTo(160, 160);
-                ctx.fill();
-                ctx.lineWidth = 3;
-                ctx.strokeStyle = '#090826';
-                ctx.stroke();
-
-                ctx.save();
-                ctx.translate(160, 160);
-                ctx.rotate(angle + sliceAngle / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 16px Nunito";
-                ctx.fillText(slice.label, 130, 6);
-                ctx.restore();
-            });
-        }
-
-        function spinWheel() {
-            if (isSpinning) return;
-            if (userData.coinRolls < 1) {
-                showBubbleToast("Need 1 Coin Roll to Spin!", "🎲", "from-rose-500 to-red-600");
-                return;
-            }
-
-            userData.coinRolls -= 1;
-            userData.wheelSpinsCount += 1;
-            updateUI();
-            isSpinning = true;
-
-            const spinRounds = 5 + Math.random() * 5;
-            const targetAngle = wheelAngle + spinRounds * Math.PI * 2 + Math.random() * Math.PI * 2;
-            const startTime = performance.now();
-            const duration = 3000;
-
-            function animate(time) {
-                const elapsed = time - startTime;
-                if (elapsed < duration) {
-                    const progress = elapsed / duration;
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    wheelAngle = targetAngle * easeOut;
-                    drawWheel();
-                    requestAnimationFrame(animate);
-                } else {
-                    wheelAngle = targetAngle % (Math.PI * 2);
-                    drawWheel();
-                    isSpinning = false;
-
-                    const numSlices = wheelSlices.length;
-                    const sliceAngle = (2 * Math.PI) / numSlices;
-                    let normalizedAngle = (1.5 * Math.PI - wheelAngle) % (2 * Math.PI);
-                    if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
-
-                    const landedIndex = Math.floor(normalizedAngle / sliceAngle) % numSlices;
-                    const prize = wheelSlices[landedIndex];
-
-                    userData.tokens += prize.val;
-                    showBubbleToast(`Won +${prize.val} Vexel Bucks!`, "⚡", "from-blookYellow to-amber-500");
-                    updateUI();
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        /* ==========================================================================
-           TRADING & FRIENDS
-           ========================================================================== */
-        let activeMarketOffers = [
-            { id: 'tr_1', seller: 'CosmicCollector', vexelId: 'space_v14', price: 1200 },
-            { id: 'tr_2', seller: 'RetroGamer99', vexelId: 'arcade_v10', price: 800 }
-        ];
-
-        let userFriendsList = [
-            { name: 'GamerVexel_99', status: 'Online', vexelsCount: 42 },
-            { name: 'ChromaHunter', status: 'In Game', vexelsCount: 88 }
-        ];
-
-        function renderTradingPlaza() {
-            const selectEl = document.getElementById('trade-select-vexel');
-            if (selectEl) {
-                selectEl.innerHTML = '';
-                userData.unlockedBlooks.forEach(id => {
-                    const vex = BLOOKS_DATABASE[id];
-                    if (vex) {
-                        const opt = document.createElement('option');
-                        opt.value = id;
-                        opt.innerText = `${vex.name} (${vex.rarity.toUpperCase()})`;
-                        selectEl.appendChild(opt);
-                    }
-                });
-            }
-
-            const listEl = document.getElementById('live-trade-list');
-            if (!listEl) return;
-            listEl.innerHTML = '';
-
-            if (activeMarketOffers.length === 0) {
-                listEl.innerHTML = '<p class="text-xs text-gray-400 font-bold text-center py-4">No active trade listings available.</p>';
-                return;
-            }
-
-            activeMarketOffers.forEach(offer => {
-                const vex = BLOOKS_DATABASE[offer.vexelId];
-                if (!vex) return;
-
-                const itemCard = document.createElement('div');
-                itemCard.className = 'bg-indigo-950 border-2 border-blookBorder rounded-2xl p-3 flex items-center justify-between gap-3 shadow';
-                itemCard.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center">
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='c' cx='35%' cy='35%' r='65%'><stop offset='0%' stop-color='%23fff4a8'/><stop offset='30%' stop-color='%23f2ca30'/><stop offset='70%' stop-color='%23d99f07'/><stop offset='100%' stop-color='%238a5a00'/></radialGradient><radialGradient id='f' cx='40%' cy='40%' r='60%'><stop offset='0%' stop-color='%23ffe873'/><stop offset='60%' stop-color='%23e2a90d'/><stop offset='100%' stop-color='%23a87200'/></radialGradient><linearGradient id='b' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23ffffff'/><stop offset='25%' stop-color='%23fff275'/><stop offset='70%' stop-color='%23ffb800'/><stop offset='100%' stop-color='%23e68a00'/></linearGradient></defs><circle cx='50' cy='50' r='48' fill='url(%23c)' stroke='%23613f00' stroke-width='1.5'/><circle cx='50' cy='50' r='45' fill='none' stroke='%23ffe873' stroke-width='3' stroke-dasharray='1.5 1.5'/><circle cx='50' cy='50' r='42' fill='none' stroke='%239e6e00' stroke-width='1'/><circle cx='50' cy='50' r='38' fill='url(%23f)' stroke='%23fef39e' stroke-width='1.5'/><circle cx='50' cy='50' r='35' fill='none' stroke='%237a5300' stroke-width='1'/><path d='M 54 18 L 26 50 C 24 53 27 57 31 57 L 46 57 L 41 81 C 40 85 46 87 49 83 L 75 49 C 78 45 75 41 70 41 L 55 41 L 60 21 C 61 17 56 15 54 18 Z' fill='url(%23b)' stroke='%23b56f00' stroke-width='2' stroke-linejoin='round'/></svg>" alt="Coin" class="w-full h-full object-contain"/>
-                        </div>
-                        <div>
-                            <h4 class="font-extrabold text-sm text-white">${vex.name}</h4>
-                            <p class="text-[10px] text-indigo-300 font-extrabold">Seller: ${offer.seller}</p>
-                        </div>
-                    </div>
-                    <button onclick="buyTradeOffer('${offer.id}')" class="btn-3d bg-blookGreen text-white font-extrabold px-3 py-1.5 rounded-xl border-b-2 border-emerald-900 text-xs">
-                        Buy ⚡${offer.price}
-                    </button>
-                `;
-                listEl.appendChild(itemCard);
-            });
-        }
-
-        function postTradeOffer() {
-            const vexelId = document.getElementById('trade-select-vexel').value;
-            const price = parseInt(document.getElementById('trade-asking-price').value);
-
-            if (!vexelId || isNaN(price) || price <= 0) {
-                showBubbleToast("Enter Valid Offer Details!", "⚠️", "from-rose-500 to-red-600");
-                return;
-            }
-
-            activeMarketOffers.unshift({
-                id: `tr_${Date.now()}`,
-                seller: userData.username,
-                vexelId: vexelId,
-                price: price
-            });
-
-            showBubbleToast(`Trade Listed @ ⚡${price}!`, "🏷️", "from-blookGreen to-emerald-400");
-            renderTradingPlaza();
-        }
-
-        function buyTradeOffer(offerId) {
-            const offer = activeMarketOffers.find(o => o.id === offerId);
-            if (!offer) return;
-
-            if (userData.tokens < offer.price) {
-                showBubbleToast("Not Enough Vexel Bucks!", "🔒", "from-rose-500 to-red-600");
-                return;
-            }
-
-            userData.tokens -= offer.price;
-            if (!userData.unlockedBlooks.includes(offer.vexelId)) {
-                userData.unlockedBlooks.push(offer.vexelId);
-            }
-
-            activeMarketOffers = activeMarketOffers.filter(o => o.id !== offerId);
-            showBubbleToast(`Purchased ${BLOOKS_DATABASE[offer.vexelId].name}!`, "🎉", "from-blookGreen to-emerald-400");
-            updateUI();
-            renderTradingPlaza();
-        }
-
         function renderFriends() {
             const container = document.getElementById('friends-list-container');
             if (!container) return;
             container.innerHTML = '';
 
-            userFriendsList.forEach((friend, idx) => {
+            if (userData.friendsList.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-400 font-bold text-center py-6 col-span-2">No friends added yet! Type a player username above to add them.</p>';
+                return;
+            }
+
+            userData.friendsList.forEach((friendName, idx) => {
                 const fCard = document.createElement('div');
                 fCard.className = 'bg-indigo-950 border-2 border-blookBorder rounded-2xl p-4 flex items-center justify-between gap-3 shadow';
                 fCard.innerHTML = `
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-blookBlue border border-blue-400 flex items-center justify-center font-black text-white text-base">
-                            ${friend.name.charAt(0).toUpperCase()}
+                            ${friendName.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                            <h4 class="font-extrabold text-sm text-white">${friend.name}</h4>
-                            <span class="text-[10px] font-extrabold text-emerald-400 uppercase">${friend.status} • ${friend.vexelsCount} Vexels</span>
+                            <h4 class="font-extrabold text-sm text-white">${friendName}</h4>
+                            <span class="text-[10px] font-extrabold text-emerald-400 uppercase">Online Player</span>
                         </div>
                     </div>
-                    <button onclick="giftRollToFriend(${idx})" class="btn-3d bg-blookYellow text-blookBg font-black px-3 py-1 rounded-xl border-b-2 border-yellow-700 text-xs uppercase">
+                    <button onclick="giftRollToFriend('${friendName}')" class="btn-3d bg-blookYellow text-blookBg font-black px-3 py-1 rounded-xl border-b-2 border-yellow-700 text-xs uppercase">
                         Gift Roll 🎲
                     </button>
                 `;
                 container.appendChild(fCard);
-            });
+        });
+    }
+
+    /* ==========================================================================
+       BUBBLE TOAST & GAME FEEDBACK NOTIFICATIONS
+       ========================================================================== */
+    function showBubbleToast(message, icon = "⚡", color = "from-blookYellow to-amber-500") {
+        const container = document.getElementById('bubble-toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `bg-gradient-to-r ${color} border-4 border-white text-blookBg px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-toast-slide font-blooket text-lg uppercase tracking-wide pointer-events-auto`;
+        toast.innerHTML = `
+            <span class="text-3xl animate-bounce">${icon}</span>
+            <span class="drop-shadow-sm">${message}</span>
+        `;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            toast.style.transform = 'translateY(20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3200);
+    }
+
+    function triggerGameFeedback(text, colorClass = "from-blookYellow via-amber-400 to-blookPink") {
+        const banner = document.getElementById('game-feedback-banner');
+        if (!banner) return;
+
+        banner.innerText = text;
+        banner.className = `w-full bg-gradient-to-r ${colorClass} border-4 border-white text-blookBg font-blooket text-2xl md:text-3xl text-center py-3 px-6 rounded-2xl shadow-2xl uppercase tracking-wider animate-bubble-pop z-30`;
+        banner.classList.remove('hidden');
+
+        setTimeout(() => {
+            banner.classList.add('hidden');
+        }, 1800);
+    }
+
+    /* ==========================================================================
+       TAB SWITCHING ENGINE
+       ========================================================================== */
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => {
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+        });
+
+        const activeTab = document.getElementById(tabId);
+        if (activeTab) {
+            activeTab.classList.remove('hidden');
+            activeTab.classList.add('flex');
         }
 
-        function addFriend() {
-            const input = document.getElementById('friend-username-input');
-            const val = input ? input.value.trim() : '';
-            if (!val) return;
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('bg-blookBlue');
+            btn.classList.add('bg-blookCard');
+        });
 
-            userFriendsList.push({
-                name: val,
-                status: 'Online',
-                vexelsCount: Math.floor(Math.random() * 50) + 5
-            });
-
-            input.value = '';
-            renderFriends();
+        const activeNav = document.getElementById(`nav-${tabId}`);
+        if (activeNav) {
+            activeNav.classList.add('bg-blookBlue');
+            activeNav.classList.remove('bg-blookCard');
         }
 
-        function giftRollToFriend(idx) {
-            if (userData.coinRolls < 1) {
-                showBubbleToast("Need 1 Roll to Send Gift!", "🎲", "from-rose-500 to-red-600");
-                return;
+        if (tabId === 'wheel-tab') drawWheel();
+        if (tabId === 'trading-tab') renderTradingPlaza();
+        if (tabId === 'friends-tab') renderFriends();
+    }
+
+    /* ==========================================================================
+       MARKET PACKS RENDER & PACK OPENER
+       ========================================================================== */
+    function renderMarket() {
+        const grid = document.getElementById('market-packs-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        PACKS_DATABASE.forEach(pack => {
+            const maxAfford = Math.min(100, Math.floor(userData.tokens / pack.cost));
+            const packCard = document.createElement('div');
+            packCard.className = `bg-gradient-to-b ${pack.bgColor} border-4 ${pack.borderColor} rounded-3xl p-5 flex flex-col items-center justify-between gap-3 shadow-blook-card hover:scale-105 transition-transform`;
+            packCard.innerHTML = `
+                <div class="text-6xl animate-float">${pack.icon}</div>
+                <div class="text-center w-full">
+                    <h3 class="font-blooket text-xl text-white drop-shadow">${pack.name}</h3>
+                    <div class="mt-1 bg-black/60 border border-white/20 rounded-xl px-2.5 py-1 flex items-center justify-between">
+                        <span class="text-[9px] text-gray-300 font-extrabold uppercase">Top Chase:</span>
+                        <span class="text-xs font-black text-blookYellow">${pack.featured || 'Chroma Vexel 🌟'}</span>
+                    </div>
+                </div>
+                <div class="w-full space-y-1.5">
+                    <button onclick="openPack('${pack.id}', 1)" class="btn-3d w-full ${pack.btnColor} text-white font-extrabold py-2 rounded-xl border-b-4 text-xs flex items-center justify-center gap-2 shadow-md">
+                        <span>Open 1x (${pack.cost} ⚡)</span>
+                    </button>
+                    <div class="grid grid-cols-3 gap-1">
+                        <button onclick="openPack('${pack.id}', 10)" class="btn-3d bg-indigo-900 hover:bg-indigo-800 text-white font-black py-1.5 rounded-lg border-b-2 border-indigo-950 text-[10px]">10x</button>
+                        <button onclick="openPack('${pack.id}', 50)" class="btn-3d bg-indigo-900 hover:bg-indigo-800 text-white font-black py-1.5 rounded-lg border-b-2 border-indigo-950 text-[10px]">50x</button>
+                        <button onclick="openPack('${pack.id}', ${Math.max(1, maxAfford)})" class="btn-3d bg-indigo-900 hover:bg-indigo-800 text-blookYellow font-black py-1.5 rounded-lg border-b-2 border-indigo-950 text-[10px]">MAX (${Math.max(1, maxAfford)})</button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(packCard);
+        });
+    }
+
+    function openPack(packId, amount = 1) {
+        const pack = PACKS_DATABASE.find(p => p.id === packId);
+        if (!pack) return;
+
+        let openCount = Math.min(100, Math.max(1, amount));
+        const totalCost = pack.cost * openCount;
+
+        if (userData.tokens < totalCost) {
+            showBubbleToast(`Need ⚡ ${totalCost.toLocaleString()} Vexel Bucks!`, "🔒", "from-rose-500 to-red-600");
+            return;
+        }
+
+        userData.tokens -= totalCost;
+        userData.packsOpenedCount += openCount;
+        userData.passXP += openCount * 25;
+        
+        let weightedPool = [];
+        pack.items.forEach(itemId => {
+            const v = BLOOKS_DATABASE[itemId];
+            const weight = Math.max(1, Math.floor(RARITY_WEIGHTS[v.rarity] * 100));
+            for(let i = 0; i < weight; i++) {
+                weightedPool.push(itemId);
             }
-            userData.coinRolls -= 1;
-            showBubbleToast(`Gifted Roll to ${userFriendsList[idx].name}!`, "🎁", "from-cyan-400 to-blue-500");
-            updateUI();
+        });
+
+        const wonVexels = [];
+        let rollsEarned = 0;
+
+        for (let i = 0; i < openCount; i++) {
+            const wonId = weightedPool[Math.floor(Math.random() * weightedPool.length)];
+            const wonVexel = BLOOKS_DATABASE[wonId];
+
+            if (!userData.unlockedBlooks.includes(wonId)) {
+                userData.unlockedBlooks.push(wonId);
+            }
+
+            if (wonVexel.rarity === 'mythic') {
+                rollsEarned += 3;
+            } else if (wonVexel.rarity === 'chroma') {
+                rollsEarned += 1;
+            }
+
+            wonVexels.push(wonVexel);
         }
 
-        /* ==========================================================================
-           INTERACTIVE GAME MODES
-           ========================================================================== */
-        let currentGameMode = '';
-        let currentGameScore = 0;
-        let currentQuestionIdx = 0;
+        userData.coinRolls += rollsEarned;
 
-        const SAMPLE_TRIVIA = [
-            { q: "What is the capital of France?", answers: ["Paris", "London", "Rome", "Berlin"], correct: 0 },
-            { q: "Which element has the symbol 'O'?", answers: ["Gold", "Oxygen", "Osmium", "Silver"], correct: 1 },
-            { q: "What planet is known as the Red Planet?", answers: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1 },
-            { q: "How many sides does an Octagon have?", answers: ["6", "7", "8", "10"], correct: 2 },
-            { q: "What is 12 x 12?", answers: ["120", "144", "124", "148"], correct: 1 },
-            { q: "Which ocean is the largest on Earth?", answers: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: 3 }
-        ];
+        updateUI();
+        triggerPackAnimation(pack, wonVexels, rollsEarned, openCount);
+    }
 
-        function startInteractiveGame(modeKey) {
-            currentGameMode = modeKey;
-            currentGameScore = 0;
-            currentQuestionIdx = 0;
+    function triggerPackAnimation(pack, wonVexels, rollsEarned, openCount) {
+        const modal = document.getElementById('pack-opener-modal');
+        const packStage = document.getElementById('opener-pack-stage');
+        const revealStage = document.getElementById('opener-reveal-stage');
+        const packCard = document.getElementById('opener-pack-card');
 
-            document.getElementById('game-selection-screen').classList.add('hidden');
-            const activeGameScreen = document.getElementById('active-game-screen');
-            activeGameScreen.classList.remove('hidden');
-            activeGameScreen.classList.add('flex');
+        const singleView = document.getElementById('single-card-view');
+        const multiView = document.getElementById('multi-card-view');
 
-            document.getElementById('game-mode-title').innerText = modeKey.toUpperCase();
-            document.getElementById('game-score-display').innerText = `Score: ${currentGameScore}`;
+        packCard.className = `w-56 h-72 md:w-64 md:h-80 rounded-3xl border-8 p-6 flex flex-col items-center justify-between shadow-2xl relative cursor-pointer bg-gradient-to-b ${pack.bgColor} ${pack.borderColor} animate-pack-shake`;
+        document.getElementById('opener-pack-icon').innerText = pack.icon;
+        document.getElementById('opener-pack-title').innerText = openCount > 1 ? `${openCount}x ${pack.name}` : pack.name;
 
-            userData.gamesPlayedCount += 1;
-            userData.coinRolls += 1;
-            userData.passXP += 100;
+        packStage.classList.remove('hidden');
+        packStage.classList.add('flex');
+        revealStage.classList.add('hidden');
+        revealStage.classList.remove('flex');
 
-            showNextQuestion();
-            updateUI();
-        }
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
 
-        function showNextQuestion() {
-            const qObj = SAMPLE_TRIVIA[currentQuestionIdx % SAMPLE_TRIVIA.length];
-            document.getElementById('question-number').innerText = `Question ${currentQuestionIdx + 1}`;
-            document.getElementById('question-text').innerText = qObj.q;
+        setTimeout(() => {
+            packStage.classList.add('hidden');
+            packStage.classList.remove('flex');
 
-            const grid = document.getElementById('question-answers-grid');
-            grid.innerHTML = '';
+            if (openCount === 1) {
+                singleView.classList.remove('hidden');
+                multiView.classList.add('hidden');
 
-            qObj.answers.forEach((ans, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'btn-3d bg-indigo-900 hover:bg-blookBlue text-white font-bold p-4 rounded-xl text-sm border-b-4 border-indigo-950 text-left';
-                btn.innerText = ans;
-                btn.onclick = () => handleAnswer(idx === qObj.correct);
-                grid.appendChild(btn);
-            });
+                const wonVexel = wonVexels[0];
+                const revCard = document.getElementById('revealed-vexel-card');
+                let rarityClass = 'rarity-common';
+                let rarityBg = 'bg-gray-500';
 
-            document.getElementById('goldquest-minigame').classList.add('hidden');
-            document.getElementById('goldquest-minigame').classList.remove('flex');
-            document.getElementById('restaurant-minigame').classList.add('hidden');
-            document.getElementById('restaurant-minigame').classList.remove('flex');
-        }
+                if (wonVexel.rarity === 'uncommon') { rarityClass = 'rarity-uncommon'; rarityBg = 'bg-green-600'; }
+                if (wonVexel.rarity === 'rare') { rarityClass = 'rarity-rare'; rarityBg = 'bg-blue-600'; }
+                if (wonVexel.rarity === 'epic') { rarityClass = 'rarity-epic'; rarityBg = 'bg-purple-600'; }
+                if (wonVexel.rarity === 'legendary') { rarityClass = 'rarity-legendary'; rarityBg = 'bg-amber-500'; }
+                if (wonVexel.rarity === 'chroma') { rarityClass = 'rarity-chroma'; rarityBg = 'bg-rose-600'; }
+                if (wonVexel.rarity === 'mythic') { rarityClass = 'rarity-mythic'; rarityBg = 'bg-cyan-500'; }
 
-        function handleAnswer(isCorrect) {
-            if (isCorrect) {
-                currentGameScore += 250;
-                userData.tokens += 50;
-                document.getElementById('game-score-display').innerText = `Score: ${currentGameScore}`;
+                revCard.className = `w-64 h-88 md:w-72 md:h-96 rounded-3xl border-8 bg-blookCard p-6 flex flex-col items-center justify-between shadow-2xl animate-card-reveal relative ${rarityClass}`;
+                
+                const badge = document.getElementById('revealed-rarity-badge');
+                badge.className = `px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest text-white shadow-md ${rarityBg}`;
+                badge.innerText = wonVexel.rarity;
 
-                triggerGameFeedback("CORRECT! +250 PTS ⚡", "from-blookGreen via-emerald-400 to-teal-400");
+                document.getElementById('revealed-emoji').innerText = wonVexel.emoji;
+                document.getElementById('revealed-name').innerText = wonVexel.name;
 
-                if (currentGameMode === 'getrich') {
-                    setTimeout(() => {
-                        const minigame = document.getElementById('goldquest-minigame');
-                        minigame.classList.remove('hidden');
-                        minigame.classList.add('flex');
-                    }, 600);
-                } else if (currentGameMode === 'restaurant') {
-                    setTimeout(() => {
-                        const minigame = document.getElementById('restaurant-minigame');
-                        minigame.classList.remove('hidden');
-                        minigame.classList.add('flex');
-                    }, 600);
+                const bonusEl = document.getElementById('revealed-roll-bonus');
+                if (rollsEarned > 0) {
+                    bonusEl.innerText = `+${rollsEarned} FREE Coin Roll Earned! 🎲`;
+                    bonusEl.classList.remove('hidden');
                 } else {
-                    currentQuestionIdx++;
-                    setTimeout(showNextQuestion, 1200);
+                    bonusEl.classList.add('hidden');
                 }
             } else {
-                triggerGameFeedback("INCORRECT! NEXT QUESTION ❌", "from-rose-600 via-pink-600 to-red-500");
+                singleView.classList.add('hidden');
+                multiView.classList.remove('hidden');
+                multiView.classList.add('flex');
+
+                document.getElementById('multi-reveal-title').innerText = `Unboxed ${openCount}x ${pack.name}!`;
+                const multiGrid = document.getElementById('multi-reveal-grid');
+                multiGrid.innerHTML = '';
+
+                wonVexels.forEach(v => {
+                    let rarityBorder = 'border-gray-500';
+                    if (v.rarity === 'uncommon') rarityBorder = 'border-green-500';
+                    if (v.rarity === 'rare') rarityBorder = 'border-blue-500';
+                    if (v.rarity === 'epic') rarityBorder = 'border-purple-500';
+                    if (v.rarity === 'legendary') rarityBorder = 'border-amber-500';
+                    if (v.rarity === 'chroma') rarityBorder = 'border-rose-500 shadow-sm shadow-rose-500';
+                    if (v.rarity === 'mythic') rarityBorder = 'border-cyan-400 shadow-md shadow-cyan-400';
+
+                    const item = document.createElement('div');
+                    item.className = `bg-blookCard border-2 ${rarityBorder} rounded-xl p-2 flex flex-col items-center text-center gap-1`;
+                    item.innerHTML = `
+                        <div class="text-2xl">${v.emoji}</div>
+                        <span class="text-[9px] font-black leading-tight text-white truncate w-full">${v.name}</span>
+                        <span class="text-[7px] font-extrabold uppercase px-1 rounded bg-indigo-950 text-indigo-200">${v.rarity}</span>
+                    `;
+                    multiGrid.appendChild(item);
+                });
+
+                const summaryEl = document.getElementById('multi-roll-summary');
+                if (rollsEarned > 0) {
+                    summaryEl.innerText = `🎉 Total Bonus Rolls Earned: +${rollsEarned} FREE Coin Rolls! 🎲`;
+                } else {
+                    summaryEl.innerText = '';
+                }
+            }
+
+            revealStage.classList.remove('hidden');
+            revealStage.classList.add('flex');
+        }, 1200);
+    }
+
+    function closePackOpenerModal() {
+        const modal = document.getElementById('pack-opener-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        renderLocker();
+        renderAchievements();
+    }
+
+    /* ==========================================================================
+       LOCKER RENDERING
+       ========================================================================== */
+    function renderLocker() {
+        const container = document.getElementById('locker-packs-container');
+        if(!container) return;
+        container.innerHTML = '';
+
+        PACKS_DATABASE.forEach(pack => {
+            const packSection = document.createElement('div');
+            packSection.className = 'bg-indigo-950/60 border-2 border-blookBorder rounded-3xl p-5 space-y-4 shadow-lg';
+            
+            let packHeaderHTML = `
+                <div class="flex items-center justify-between border-b border-blookBorder pb-3">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">${pack.icon}</span>
+                        <h3 class="font-blooket text-xl text-white">${pack.name}</h3>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3">
+            `;
+
+            let cardsHTML = '';
+
+            pack.items.forEach(itemId => {
+                const b = BLOOKS_DATABASE[itemId];
+                if (!b) return;
+
+                const isUnlocked = userData.unlockedBlooks.includes(itemId);
+                const unlockCost = RARITY_DIRECT_PRICES[b.rarity] || 500;
+
+                let rarityClass = 'border-blookBorder';
+                if (b.rarity === 'chroma') rarityClass = 'rarity-chroma';
+                if (b.rarity === 'mythic') rarityClass = 'rarity-mythic';
+
+                if (isUnlocked) {
+                    cardsHTML += `
+                        <div onclick="selectActiveVexel('${itemId}')" class="bg-blookCard border-4 rounded-2xl p-3 flex flex-col items-center gap-1.5 cursor-pointer transition-transform hover:scale-105 ${rarityClass}">
+                            <div class="text-3xl">${b.emoji}</div>
+                            <span class="text-[10px] font-black text-center leading-tight truncate w-full">${b.name}</span>
+                            <span class="text-[8px] uppercase font-extrabold px-1.5 py-0.5 rounded-full bg-indigo-950 text-indigo-200 border border-indigo-700">${b.rarity}</span>
+                            ${userData.activeBlook === itemId ? '<span class="text-[8px] font-black text-blookGreen uppercase">EQUIPPED</span>' : ''}
+                        </div>
+                    `;
+                } else {
+                    cardsHTML += `
+                        <div onclick="directBuyVexel('${itemId}')" class="bg-blookCard border-4 border-gray-800 rounded-2xl p-3 flex flex-col items-center gap-1.5 cursor-pointer transition-transform hover:scale-105 vexel-locked">
+                            <div class="text-3xl text-gray-500">${b.emoji}</div>
+                            <span class="text-[10px] font-black text-center leading-tight text-gray-400 truncate w-full">${b.name}</span>
+                            <div class="bg-black/80 border border-yellow-500/40 px-2 py-0.5 rounded-lg text-[9px] font-black text-blookYellow">
+                                ⚡ ${unlockCost.toLocaleString()}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            packSection.innerHTML = packHeaderHTML + cardsHTML + `</div>`;
+            container.appendChild(packSection);
+        });
+    }
+
+    function selectActiveVexel(id) {
+        userData.activeBlook = id;
+        updateUI();
+    }
+
+    function directBuyVexel(id) {
+        const b = BLOOKS_DATABASE[id];
+        if (!b) return;
+
+        const unlockCost = RARITY_DIRECT_PRICES[b.rarity] || 500;
+        if (userData.tokens >= unlockCost) {
+            userData.tokens -= unlockCost;
+            userData.unlockedBlooks.push(id);
+            userData.directUnlocksCount += 1;
+            showBubbleToast(`Unlocked ${b.name}!`, b.emoji, "from-blookGreen to-emerald-400");
+            updateUI();
+        } else {
+            const needed = unlockCost - userData.tokens;
+            showBubbleToast(`Need ⚡ ${needed.toLocaleString()} More Bucks!`, "🔒", "from-rose-500 to-red-600");
+        }
+    }
+
+    function buyDailyShopVexel(slotId, vexelId, price) {
+        const todayKey = new Date().toISOString().slice(0, 10);
+        const purchaseKey = `${todayKey}_slot_${slotId}`;
+
+        if (userData.dailyShopPurchases[purchaseKey]) {
+            showBubbleToast("Already Purchased Today!", "✅", "from-emerald-500 to-teal-600");
+            return;
+        }
+
+        if (userData.tokens < price) {
+            showBubbleToast(`Need ⚡ ${price.toLocaleString()} Vexel Bucks!`, "🔒", "from-rose-500 to-red-600");
+            return;
+        }
+
+        const v = BLOOKS_DATABASE[vexelId];
+        userData.tokens -= price;
+        userData.dailyShopPurchases[purchaseKey] = true;
+
+        if (!userData.unlockedBlooks.includes(vexelId)) {
+            userData.unlockedBlooks.push(vexelId);
+        }
+
+        showBubbleToast(`Unlocked ${v.name}!`, v.emoji, "from-blookGreen to-emerald-400");
+        updateUI();
+    }
+
+    /* ==========================================================================
+       VEXEL PASS SEASON 2 RENDER ENGINE
+       ========================================================================== */
+    const VEXEL_PASS_TIERS = [
+        { tier: 1, reqXP: 100, free: { label: "⚡ 1,000 Vexel Bucks", type: "tokens", val: 1000 }, premium: { label: "🎲 +5 Free Rolls", type: "rolls", val: 5 } },
+        { tier: 2, reqXP: 250, free: { label: "🎲 +2 Free Rolls", type: "rolls", val: 2 }, premium: { label: "⚡ 5,000 Vexel Bucks", type: "tokens", val: 5000 } },
+        { tier: 3, reqXP: 450, free: { label: "⚡ 2,500 Vexel Bucks", type: "tokens", val: 2500 }, premium: { label: "🎄 Frosty Snowman", type: "vexel", val: "christmas_v4" } },
+        { tier: 4, reqXP: 700, free: { label: "🎨 Neon Wave Banner", type: "banner", val: "neon" }, premium: { label: "⚡ 10,000 Vexel Bucks", type: "tokens", val: 10000 } },
+        { tier: 5, reqXP: 1000, free: { label: "🎃 Phantom Ghost", type: "vexel", val: "halloween_v2" }, premium: { label: "🎲 +8 Free Rolls", type: "rolls", val: 8 } },
+        { tier: 6, reqXP: 1350, free: { label: "⚡ 5,000 Vexel Bucks", type: "tokens", val: 5000 }, premium: { label: "⚡ 15,000 Vexel Bucks", type: "tokens", val: 15000 } },
+        { tier: 7, reqXP: 1750, free: { label: "🎲 +5 Free Rolls", type: "rolls", val: 5 }, premium: { label: "🏺 Royal Temple", type: "vexel", val: "egypt_v5" } },
+        { tier: 8, reqXP: 2200, free: { label: "⚡ 7,500 Vexel Bucks", type: "tokens", val: 7500 }, premium: { label: "🎨 Cosmic Galaxy Banner", type: "banner", val: "cosmic" } },
+        { tier: 9, reqXP: 2700, free: { label: "🍂 Harvest Squirrel", type: "vexel", val: "fall_v4" }, premium: { label: "⚡ 25,000 Vexel Bucks", type: "tokens", val: 25000 } },
+        { tier: 10, reqXP: 3300, free: { label: "⚡ 10,000 Vexel Bucks", type: "tokens", val: 10000 }, premium: { label: "👑 Pharaoh King (Legendary)", type: "vexel", val: "egypt_v8" } },
+        { tier: 11, reqXP: 4000, free: { label: "🎲 +8 Free Rolls", type: "rolls", val: 8 }, premium: { label: "⚡ 35,000 Vexel Bucks", type: "tokens", val: 35000 } },
+        { tier: 12, reqXP: 4800, free: { label: "🚀 Deep Galaxy", type: "vexel", val: "space_v6" }, premium: { label: "🎨 Cyber Grid Banner", type: "banner", val: "cyber" } },
+        { tier: 13, reqXP: 5700, free: { label: "⚡ 15,000 Vexel Bucks", type: "tokens", val: 15000 }, premium: { label: "⚡ 50,000 Vexel Bucks", type: "tokens", val: 50000 } },
+        { tier: 14, reqXP: 6700, free: { label: "🎲 +12 Free Rolls", type: "rolls", val: 12 }, premium: { label: "🎨 Royal Gold Banner", type: "banner", val: "gold" } },
+        { tier: 15, reqXP: 7800, free: { label: "⚡ 25,000 Vexel Bucks", type: "tokens", val: 25000 }, premium: { label: "🎨 Volcano Flame Banner", type: "banner", val: "volcano" } },
+        { tier: 16, reqXP: 9000, free: { label: "🎲 +15 Free Rolls", type: "rolls", val: 15 }, premium: { label: "⚡ 75,000 Vexel Bucks", type: "tokens", val: 75000 } },
+        { tier: 17, reqXP: 10500, free: { label: "⚡ 40,000 Vexel Bucks", type: "tokens", val: 40000 }, premium: { label: "🐉 Dragon Lord (Legendary)", type: "vexel", val: "medieval_v8" } },
+        { tier: 18, reqXP: 12000, free: { label: "🎨 Dragon Crest Banner", type: "banner", val: "dragon" }, premium: { label: "⚡ 100,000 Vexel Bucks", type: "tokens", val: 100000 } },
+        { tier: 19, reqXP: 14000, free: { label: "🎲 +20 Free Rolls", type: "rolls", val: 20 }, premium: { label: "🦄 Chroma Unicorn (Chroma)", type: "vexel", val: "fantasy_v8" } },
+        { tier: 20, reqXP: 16500, free: { label: "⚡ 50,000 Vexel Bucks", type: "tokens", val: 50000 }, premium: { label: "👾 Alien Overlord (Mythic)", type: "vexel", val: "space_v8" } }
+    ];
+
+    function unlockPremiumPass() {
+        if (userData.hasPremiumPass) {
+            showBubbleToast("Season 2 Premium Active!", "✨", "from-purple-500 to-indigo-600");
+            return;
+        }
+
+        if (userData.tokens < 50000) {
+            showBubbleToast("Need ⚡ 50,000 Vexel Bucks!", "🔒", "from-rose-500 to-red-600");
+            return;
+        }
+
+        userData.tokens -= 50000;
+        userData.hasPremiumPass = true;
+        showBubbleToast("SEASON 2 PREMIUM UNLOCKED!", "👑", "from-blookYellow to-amber-500");
+        updateUI();
+    }
+
+    function claimPassReward(tierNum, isPremium) {
+        const tierObj = VEXEL_PASS_TIERS.find(t => t.tier === tierNum);
+        if (!tierObj) return;
+
+        if (userData.passXP < tierObj.reqXP) {
+            showBubbleToast(`Requires ${tierObj.reqXP} Pass XP!`, "🔒", "from-rose-500 to-red-600");
+            return;
+        }
+
+        if (isPremium && !userData.hasPremiumPass) {
+            showBubbleToast("Unlock Premium Pass First!", "👑", "from-purple-500 to-indigo-600");
+            return;
+        }
+
+        const rewardList = isPremium ? userData.claimedPremiumTiers : userData.claimedFreeTiers;
+        if (rewardList.includes(tierNum)) {
+            showBubbleToast("Reward Already Claimed!", "✅", "from-emerald-500 to-teal-600");
+            return;
+        }
+
+        const reward = isPremium ? tierObj.premium : tierObj.free;
+
+        if (reward.type === "tokens") {
+            userData.tokens += reward.val;
+        } else if (reward.type === "rolls") {
+            userData.coinRolls += reward.val;
+        } else if (reward.type === "vexel") {
+            if (!userData.unlockedBlooks.includes(reward.val)) {
+                userData.unlockedBlooks.push(reward.val);
+            }
+        } else if (reward.type === "banner") {
+            if (!userData.unlockedBanners.includes(reward.val)) {
+                userData.unlockedBanners.push(reward.val);
+            }
+        }
+
+        rewardList.push(tierNum);
+        showBubbleToast(`Claimed: ${reward.label}`, "🎁", "from-blookGreen to-emerald-400");
+        updateUI();
+    }
+
+    function renderVexelPass() {
+        const container = document.getElementById('pass-tiers-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const statusText = document.getElementById('pass-status-text');
+        const unlockBtn = document.getElementById('unlock-premium-pass-btn');
+        
+        if (userData.hasPremiumPass) {
+            if (statusText) statusText.innerText = '✨ Season 2 Premium Pass Active! All 20 premium tier rewards unlocked!';
+            if (unlockBtn) {
+                unlockBtn.innerText = 'PREMIUM UNLOCKED ✅';
+                unlockBtn.disabled = true;
+                unlockBtn.className = 'bg-emerald-600 text-white font-black px-6 py-3.5 rounded-2xl text-sm uppercase shadow cursor-default opacity-80';
+            }
+        } else {
+            if (statusText) statusText.innerText = 'Unlock the Premium Track to get 2x rewards on all 20 tiers!';
+            if (unlockBtn) {
+                unlockBtn.innerText = 'Unlock Premium (⚡ 50,000)';
+                unlockBtn.disabled = false;
+                unlockBtn.className = 'btn-3d bg-blookYellow hover:bg-yellow-400 text-blookBg font-black px-6 py-3.5 rounded-2xl border-b-4 border-yellow-700 text-sm uppercase shadow-lg';
+            }
+        }
+
+        VEXEL_PASS_TIERS.forEach(t => {
+            const isUnlocked = userData.passXP >= t.reqXP;
+            const freeClaimed = userData.claimedFreeTiers.includes(t.tier);
+            const premiumClaimed = userData.claimedPremiumTiers.includes(t.tier);
+
+            const tierCard = document.createElement('div');
+            tierCard.className = `bg-indigo-950 border-2 ${isUnlocked ? 'border-purple-500' : 'border-indigo-900 opacity-70'} rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow`;
+            
+            tierCard.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl ${isUnlocked ? 'bg-purple-600 text-white' : 'bg-indigo-900 text-indigo-400'} flex flex-col items-center justify-center font-black">
+                        <span class="text-[9px] uppercase leading-none">TIER</span>
+                        <span class="text-lg leading-none">${t.tier}</span>
+                    </div>
+                    <div>
+                        <h4 class="font-black text-white text-base">Tier ${t.tier} (${t.reqXP} XP)</h4>
+                        <p class="text-xs text-indigo-300 font-bold">${isUnlocked ? 'Unlocked ✅' : `Requires ${t.reqXP - userData.passXP} more XP`}</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    <div class="bg-blookCard border border-indigo-700 p-2.5 rounded-xl flex items-center justify-between gap-3 min-w-[200px]">
+                        <div>
+                            <span class="text-[8px] font-black uppercase text-indigo-300 block">FREE REWARD</span>
+                            <span class="text-xs font-black text-white">${t.free.label}</span>
+                        </div>
+                        ${freeClaimed ? `
+                            <span class="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-1 rounded-lg border border-emerald-800">CLAIMED</span>
+                        ` : `
+                            <button onclick="claimPassReward(${t.tier}, false)" class="btn-3d bg-blookBlue hover:bg-blue-500 text-white font-black text-[10px] px-2.5 py-1.5 rounded-lg border-b-2 border-blue-900 uppercase ${!isUnlocked ? 'opacity-50 cursor-not-allowed' : ''}">Claim</button>
+                        `}
+                    </div>
+
+                    <div class="bg-gradient-to-r from-purple-950 to-indigo-950 border border-purple-500/50 p-2.5 rounded-xl flex items-center justify-between gap-3 min-w-[220px]">
+                        <div>
+                            <span class="text-[8px] font-black uppercase text-amber-400 block">👑 PREMIUM REWARD</span>
+                            <span class="text-xs font-black text-blookYellow">${t.premium.label}</span>
+                        </div>
+                        ${premiumClaimed ? `
+                            <span class="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-1 rounded-lg border border-emerald-800">CLAIMED</span>
+                        ` : `
+                            <button onclick="claimPassReward(${t.tier}, true)" class="btn-3d bg-blookYellow hover:bg-yellow-400 text-blookBg font-black text-[10px] px-2.5 py-1.5 rounded-lg border-b-2 border-yellow-700 uppercase ${(!isUnlocked || !userData.hasPremiumPass) ? 'opacity-50 cursor-not-allowed' : ''}">Claim</button>
+                        `}
+                    </div>
+                </div>
+            `;
+            container.appendChild(tierCard);
+        });
+    }
+
+    /* ==========================================================================
+       WHEEL ENGINE
+       ========================================================================== */
+    const wheelSlices = [
+        { label: '50 ⚡', val: 50, color: '#3182ce' },
+        { label: '100 ⚡', val: 100, color: '#38a169' },
+        { label: '250 ⚡', val: 250, color: '#805ad5' },
+        { label: '500 ⚡', val: 500, color: '#dd6b20' },
+        { label: '10 ⚡', val: 10, color: '#718096' },
+        { label: '1000 ⚡', val: 1000, color: '#d69e2e' }
+    ];
+
+    let wheelAngle = 0;
+    let isSpinning = false;
+
+    function drawWheel() {
+        const canvas = document.getElementById('wheel-canvas');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const numSlices = wheelSlices.length;
+        const sliceAngle = (2 * Math.PI) / numSlices;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        wheelSlices.forEach((slice, i) => {
+            const angle = wheelAngle + i * sliceAngle;
+            ctx.beginPath();
+            ctx.fillStyle = slice.color;
+            ctx.moveTo(160, 160);
+            ctx.arc(160, 160, 150, angle, angle + sliceAngle);
+            ctx.lineTo(160, 160);
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#090826';
+            ctx.stroke();
+
+            ctx.save();
+            ctx.translate(160, 160);
+            ctx.rotate(angle + sliceAngle / 2);
+            ctx.textAlign = "right";
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 16px Nunito";
+            ctx.fillText(slice.label, 130, 6);
+            ctx.restore();
+        });
+    }
+
+    function spinWheel() {
+        if (isSpinning) return;
+        if (userData.coinRolls < 1) {
+            showBubbleToast("Need 1 Coin Roll to Spin!", "🎲", "from-rose-500 to-red-600");
+            return;
+        }
+
+        userData.coinRolls -= 1;
+        userData.wheelSpinsCount += 1;
+        updateUI();
+        isSpinning = true;
+
+        const spinRounds = 5 + Math.random() * 5;
+        const targetAngle = wheelAngle + spinRounds * Math.PI * 2 + Math.random() * Math.PI * 2;
+        const startTime = performance.now();
+        const duration = 3000;
+
+        function animate(time) {
+            const elapsed = time - startTime;
+            if (elapsed < duration) {
+                const progress = elapsed / duration;
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                wheelAngle = targetAngle * easeOut;
+                drawWheel();
+                requestAnimationFrame(animate);
+            } else {
+                wheelAngle = targetAngle % (Math.PI * 2);
+                drawWheel();
+                isSpinning = false;
+
+                const numSlices = wheelSlices.length;
+                const sliceAngle = (2 * Math.PI) / numSlices;
+                let normalizedAngle = (1.5 * Math.PI - wheelAngle) % (2 * Math.PI);
+                if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
+
+                const landedIndex = Math.floor(normalizedAngle / sliceAngle) % numSlices;
+                const prize = wheelSlices[landedIndex];
+
+                userData.tokens += prize.val;
+                showBubbleToast(`Won +${prize.val} Vexel Bucks!`, "⚡", "from-blookYellow to-amber-500");
+                updateUI();
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    /* ==========================================================================
+       TRADING PLAZA
+       ========================================================================== */
+    let activeMarketOffers = [
+        { id: 'tr_1', seller: 'CosmicCollector', vexelId: 'space_v11', price: 1200 },
+        { id: 'tr_2', seller: 'RetroGamer99', vexelId: 'arcade_v10', price: 800 }
+    ];
+
+    function renderTradingPlaza() {
+        const selectEl = document.getElementById('trade-select-vexel');
+        if (selectEl) {
+            selectEl.innerHTML = '';
+            userData.unlockedBlooks.forEach(id => {
+                const vex = BLOOKS_DATABASE[id];
+                if (vex) {
+                    const opt = document.createElement('option');
+                    opt.value = id;
+                    opt.innerText = `${vex.name} (${vex.rarity.toUpperCase()})`;
+                    selectEl.appendChild(opt);
+                }
+            });
+        }
+
+        const listEl = document.getElementById('live-trade-list');
+        if (!listEl) return;
+        listEl.innerHTML = '';
+
+        if (activeMarketOffers.length === 0) {
+            listEl.innerHTML = '<p class="text-xs text-gray-400 font-bold text-center py-4">No active trade listings available.</p>';
+            return;
+        }
+
+        activeMarketOffers.forEach(offer => {
+            const vex = BLOOKS_DATABASE[offer.vexelId];
+            if (!vex) return;
+
+            const itemCard = document.createElement('div');
+            itemCard.className = 'bg-indigo-950 border-2 border-blookBorder rounded-2xl p-3 flex items-center justify-between gap-3 shadow';
+            itemCard.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="text-3xl">${vex.emoji}</div>
+                    <div>
+                        <h4 class="font-extrabold text-sm text-white">${vex.name}</h4>
+                        <p class="text-[10px] text-indigo-300 font-extrabold">Seller: ${offer.seller}</p>
+                    </div>
+                </div>
+                <button onclick="buyTradeOffer('${offer.id}')" class="btn-3d bg-blookGreen text-white font-extrabold px-3 py-1.5 rounded-xl border-b-2 border-emerald-900 text-xs">
+                    Buy ⚡${offer.price}
+                </button>
+            `;
+            listEl.appendChild(itemCard);
+        });
+    }
+
+    function postTradeOffer() {
+        const vexelId = document.getElementById('trade-select-vexel').value;
+        const price = parseInt(document.getElementById('trade-asking-price').value);
+
+        if (!vexelId || isNaN(price) || price <= 0) {
+            showBubbleToast("Enter Valid Offer Details!", "⚠️", "from-rose-500 to-red-600");
+            return;
+        }
+
+        activeMarketOffers.unshift({
+            id: `tr_${Date.now()}`,
+            seller: userData.username,
+            vexelId: vexelId,
+            price: price
+        });
+
+        showBubbleToast(`Trade Listed @ ⚡${price}!`, "🏷️", "from-blookGreen to-emerald-400");
+        renderTradingPlaza();
+    }
+
+    function buyTradeOffer(offerId) {
+        const offer = activeMarketOffers.find(o => o.id === offerId);
+        if (!offer) return;
+
+        if (userData.tokens < offer.price) {
+            showBubbleToast("Not Enough Vexel Bucks!", "🔒", "from-rose-500 to-red-600");
+            return;
+        }
+
+        userData.tokens -= offer.price;
+        if (!userData.unlockedBlooks.includes(offer.vexelId)) {
+            userData.unlockedBlooks.push(offer.vexelId);
+        }
+
+        activeMarketOffers = activeMarketOffers.filter(o => o.id !== offerId);
+        showBubbleToast(`Purchased ${BLOOKS_DATABASE[offer.vexelId].name}!`, "🎉", "from-blookGreen to-emerald-400");
+        updateUI();
+        renderTradingPlaza();
+    }
+
+    /* ==========================================================================
+       DAILY GIFT REWARD
+       ========================================================================== */
+    function claimDailyGift() {
+        const now = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000;
+
+        if (userData.lastDaily && (now - userData.lastDaily < oneDay)) {
+            const remainingHours = Math.ceil((oneDay - (now - userData.lastDaily)) / (1000 * 60 * 60));
+            showBubbleToast(`Available in ~${remainingHours}h!`, "⏰", "from-amber-500 to-orange-600");
+            return;
+        }
+
+        userData.lastDaily = now;
+        userData.tokens += 1000;
+        userData.coinRolls += 3;
+        showBubbleToast("DAILY REWARD: +1,000 ⚡ & +3 ROLLS 🎲", "🎁", "from-blookGreen to-teal-400");
+        updateUI();
+    }
+
+    /* ==========================================================================
+       GAME ENGINE (9 MODES)
+       ========================================================================== */
+    let currentGameMode = '';
+    let currentGameScore = 0;
+    let currentQuestionIdx = 0;
+
+    const SAMPLE_TRIVIA = [
+        { q: "What is the capital of France?", answers: ["Paris", "London", "Rome", "Berlin"], correct: 0 },
+        { q: "Which element has the symbol 'O'?", answers: ["Gold", "Oxygen", "Osmium", "Silver"], correct: 1 },
+        { q: "What planet is known as the Red Planet?", answers: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1 },
+        { q: "How many sides does an Octagon have?", answers: ["6", "7", "8", "10"], correct: 2 },
+        { q: "What is 12 x 12?", answers: ["120", "144", "124", "148"], correct: 1 },
+        { q: "Which ocean is the largest on Earth?", answers: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: 3 }
+    ];
+
+    function startInteractiveGame(modeKey) {
+        currentGameMode = modeKey;
+        currentGameScore = 0;
+        currentQuestionIdx = 0;
+
+        document.getElementById('game-selection-screen').classList.add('hidden');
+        const activeGameScreen = document.getElementById('active-game-screen');
+        activeGameScreen.classList.remove('hidden');
+        activeGameScreen.classList.add('flex');
+
+        document.getElementById('game-mode-title').innerText = modeKey.toUpperCase();
+        document.getElementById('game-score-display').innerText = `Score: ${currentGameScore}`;
+
+        userData.gamesPlayedCount += 1;
+        userData.coinRolls += 1;
+        userData.passXP += 100;
+
+        showNextQuestion();
+        updateUI();
+    }
+
+    function showNextQuestion() {
+        const qObj = SAMPLE_TRIVIA[currentQuestionIdx % SAMPLE_TRIVIA.length];
+        document.getElementById('question-number').innerText = `Question ${currentQuestionIdx + 1}`;
+        document.getElementById('question-text').innerText = qObj.q;
+
+        const grid = document.getElementById('question-answers-grid');
+        grid.innerHTML = '';
+
+        qObj.answers.forEach((ans, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-3d bg-indigo-900 hover:bg-blookBlue text-white font-bold p-4 rounded-xl text-sm border-b-4 border-indigo-950 text-left';
+            btn.innerText = ans;
+            btn.onclick = () => handleAnswer(idx === qObj.correct);
+            grid.appendChild(btn);
+        });
+
+        document.getElementById('goldquest-minigame').classList.add('hidden');
+        document.getElementById('goldquest-minigame').classList.remove('flex');
+        document.getElementById('restaurant-minigame').classList.add('hidden');
+        document.getElementById('restaurant-minigame').classList.remove('flex');
+    }
+
+    function handleAnswer(isCorrect) {
+        if (isCorrect) {
+            currentGameScore += 250;
+            userData.tokens += 50;
+            document.getElementById('game-score-display').innerText = `Score: ${currentGameScore}`;
+
+            triggerGameFeedback("CORRECT! +250 PTS ⚡", "from-blookGreen via-emerald-400 to-teal-400");
+
+            if (currentGameMode === 'getrich') {
+                setTimeout(() => {
+                    const minigame = document.getElementById('goldquest-minigame');
+                    minigame.classList.remove('hidden');
+                    minigame.classList.add('flex');
+                }, 600);
+            } else if (currentGameMode === 'restaurant') {
+                setTimeout(() => {
+                    const minigame = document.getElementById('restaurant-minigame');
+                    minigame.classList.remove('hidden');
+                    minigame.classList.add('flex');
+                }, 600);
+            } else {
                 currentQuestionIdx++;
                 setTimeout(showNextQuestion, 1200);
             }
-            updateUI();
-        }
-
-        function pickChest(chestNum) {
-            const bonus = [100, 250, 500][Math.floor(Math.random() * 3)];
-            userData.tokens += bonus;
-            triggerGameFeedback(`CHEST #${chestNum}: +${bonus} BUCKS! 🎁`, "from-blookYellow via-amber-400 to-yellow-300");
+        } else {
+            triggerGameFeedback("INCORRECT! NEXT QUESTION ❌", "from-rose-600 via-pink-600 to-red-500");
             currentQuestionIdx++;
-            setTimeout(showNextQuestion, 1400);
-            updateUI();
+            setTimeout(showNextQuestion, 1200);
+        }
+        updateUI();
+    }
+
+    function pickChest(chestNum) {
+        const bonus = [100, 250, 500][Math.floor(Math.random() * 3)];
+        userData.tokens += bonus;
+        triggerGameFeedback(`CHEST #${chestNum}: +${bonus} BUCKS! 🎁`, "from-blookYellow via-amber-400 to-yellow-300");
+        currentQuestionIdx++;
+        setTimeout(showNextQuestion, 1400);
+        updateUI();
+    }
+
+    function serveMeal(mealType) {
+        userData.tokens += 150;
+        triggerGameFeedback(`SERVED ${mealType.toUpperCase()}! +150 TIP 🍔`, "from-rose-500 via-pink-500 to-amber-400");
+        currentQuestionIdx++;
+        setTimeout(showNextQuestion, 1400);
+        updateUI();
+    }
+
+    function quitActiveGame() {
+        document.getElementById('active-game-screen').classList.add('hidden');
+        document.getElementById('active-game-screen').classList.remove('flex');
+        document.getElementById('game-selection-screen').classList.remove('hidden');
+    }
+
+    /* ==========================================================================
+       RESET GAME PROGRESS
+       ========================================================================== */
+    function resetGameProgress() {
+        try {
+            localStorage.removeItem('vexel_save_data');
+            localStorage.clear();
+        } catch(e) {}
+        userData = JSON.parse(JSON.stringify(DEFAULT_USER_DATA));
+        closeProfileModal();
+        updateUI();
+        showBubbleToast("New Account Created! Progress Reset!", "🔄", "from-blue-500 to-indigo-600");
+    }
+
+    /* ==========================================================================
+       UPDATER ENGINE ON CHANGE
+       ========================================================================== */
+    function updateUI() {
+        saveState();
+        document.getElementById('user-tokens-display').innerText = userData.tokens.toLocaleString();
+        document.getElementById('nav-username-display').innerText = userData.username;
+        
+        const activeBannerObj = BANNERS_DATABASE[userData.activeBanner] || BANNERS_DATABASE['default'];
+        const headerBanner = document.getElementById('header-profile-banner');
+        if (headerBanner) {
+            headerBanner.className = `${activeBannerObj.cssClass} flex items-center gap-2 border-2 px-3 py-1.5 rounded-xl cursor-pointer transition-transform hover:scale-105 shadow-md`;
+        }
+        const bannerNameEl = document.getElementById('nav-banner-name');
+        if (bannerNameEl) bannerNameEl.innerText = userData.username !== 'Guest_Player' ? `🔑 Logged In` : `🔑 Account Login`;
+
+        const homeStatUnlocked = document.getElementById('home-stat-unlocked');
+        if (homeStatUnlocked) homeStatUnlocked.innerText = `${userData.unlockedBlooks.length} / 220`;
+
+        const homeStatPacks = document.getElementById('home-stat-packs');
+        if (homeStatPacks) homeStatPacks.innerText = userData.packsOpenedCount;
+
+        const homeStatGames = document.getElementById('home-stat-games');
+        if (homeStatGames) homeStatGames.innerText = userData.gamesPlayedCount;
+
+        const q1 = document.getElementById('quest-1-status');
+        if (q1) q1.innerText = `${Math.min(3, userData.gamesPlayedCount)}/3`;
+
+        const q2 = document.getElementById('quest-2-status');
+        if (q2) q2.innerText = `${Math.min(5, userData.packsOpenedCount)}/5`;
+
+        const wheelRollsDisplay = document.getElementById('wheel-rolls-display');
+        if (wheelRollsDisplay) wheelRollsDisplay.innerText = userData.coinRolls;
+
+        const currentVexel = BLOOKS_DATABASE[userData.activeBlook];
+        if (currentVexel) {
+            document.getElementById('nav-active-blook-icon').innerText = currentVexel.emoji;
         }
 
-        function serveMeal(mealType) {
-            userData.tokens += 150;
-            triggerGameFeedback(`SERVED ${mealType.toUpperCase()}! +150 TIP 🍔`, "from-rose-500 via-pink-500 to-amber-400");
-            currentQuestionIdx++;
-            setTimeout(showNextQuestion, 1400);
-            updateUI();
+        const completionText = document.getElementById('locker-completion-text');
+        if (completionText) {
+            completionText.innerText = `Collection Progress: ${userData.unlockedBlooks.length} Vexels Unlocked`;
         }
 
-        function quitActiveGame() {
-            document.getElementById('active-game-screen').classList.add('hidden');
-            document.getElementById('active-game-screen').classList.remove('flex');
-            document.getElementById('game-selection-screen').classList.remove('hidden');
-        }
+        renderDailyShop();
+        renderMarket();
+        renderLocker();
+        renderAchievements();
+        renderVexelPass();
+        renderProfileModal();
+    }
 
-        /* ==========================================================================
-           SECRET CHEAT & DAILY GIFT
-           ========================================================================== */
-        function claimSecretVexelBucks() {
-            const now = Date.now();
-            const oneMonth = 30 * 24 * 60 * 60 * 1000;
-
-            if (userData.lastSecretClaim && (now - userData.lastSecretClaim < oneMonth)) {
-                const remainingDays = Math.ceil((oneMonth - (now - userData.lastSecretClaim)) / (1000 * 60 * 60 * 24));
-                showBubbleToast(`Available in ${remainingDays} Days!`, "⏰", "from-amber-500 to-orange-600");
-                return;
-            }
-
-            userData.lastSecretClaim = now;
-            userData.tokens += 300000;
-            updateUI();
-            showBubbleToast("SECRET UNLOCKED! +300,000 BUCKS!", "⚡", "from-blookYellow via-amber-400 to-blookPink");
-        }
-
-        function claimDailyGift() {
-            const now = Date.now();
-            const oneDay = 24 * 60 * 60 * 1000;
-
-            if (userData.lastDaily && (now - userData.lastDaily < oneDay)) {
-                const remainingHours = Math.ceil((oneDay - (now - userData.lastDaily)) / (1000 * 60 * 60));
-                showBubbleToast(`Available in ~${remainingHours}h!`, "⏰", "from-amber-500 to-orange-600");
-                return;
-            }
-
-            userData.lastDaily = now;
-            userData.tokens += 1000;
-            userData.coinRolls += 3;
-            showBubbleToast("DAILY REWARD: +1,000 ⚡ & +3 ROLLS 🎲", "🎁", "from-blookGreen to-teal-400");
-            updateUI();
-        }
-
-        /* ==========================================================================
-           INITIALIZATION ON WINDOW LOAD
-           ========================================================================== */
-        window.onload = function() {
-            // Force save clean starter state
-            saveState();
-            updateUI();
-            switchTab('home-tab');
-        };
-    </script>
+    window.onload = function() {
+        updateUI();
+        switchTab('home-tab');
+    };
+</script>
 </body>
 </html>
